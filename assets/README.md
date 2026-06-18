@@ -9,7 +9,7 @@ The site automatically uses any photos you drop in here — no code editing need
 | `assets/ana.jpg` | The portrait frame in the **Story** section |
 | `assets/gallery/01.jpg` … `10.jpg` | The **gallery** wall + the **floating background** |
 
-- Any photo that's missing just falls back to an elegant gold placeholder, so you can add them one at a time.
+- Until you upload, each slot shows a generated on-brand poster (`art-NN.svg` / `ana-art.svg`). Your real photo automatically takes priority once added — so you can do them one at a time.
 - Square or portrait (vertical) photos look best. JPG or PNG both fine.
 - Keep each file under ~1–2 MB so the page stays fast (resize big phone photos first).
 

@@ -15,6 +15,7 @@ const CONFIG = {
      portrait at assets/ana.jpg. They power BOTH the main gallery and
      the floating background. Missing files fall back gracefully.    */
   portrait: "assets/ana.jpg",
+  portraitArt: "assets/ana-art.svg",   // generated fallback poster
   photos: [
     "assets/gallery/01.jpg","assets/gallery/02.jpg","assets/gallery/03.jpg",
     "assets/gallery/04.jpg","assets/gallery/05.jpg","assets/gallery/06.jpg",
@@ -32,6 +33,35 @@ const CONFIG = {
   badges: [
     "TikTok LIVE Fest","LIVE Subscription creator","Top UK lifestyle live",
     "Self-love advocate","Performer & broadcaster",
+  ],
+
+  /* --- JOURNEY TIMELINE (edit the milestones) ------------------ */
+  timeline: [
+    { year:"The spark", title:"First time live", text:"One camera, one nervous hello. The room was empty — but the instinct was already there." },
+    { year:"1K", title:"The first thousand", text:"Strangers became regulars. The comments started feeling like a conversation, not a void." },
+    { year:"Viral", title:"The clip that broke out", text:"A single night, the right words, and the algorithm finally caught the wind." },
+    { year:"100K", title:"Six figures", text:"A community, not an audience. Nightly lives became a place people plan their evenings around." },
+    { year:"Stage", title:"Recognised", text:"Featured in TikTok LIVE moments and beyond — the performer's craft meeting the broadcast." },
+    { year:"Now", title:"Building the brand", text:"314K strong and turning the court into a home for the partners who get it. This is chapter one." },
+  ],
+
+  /* --- TESTIMONIALS (sample voices — swap for real ones) ------- */
+  testimonials: [
+    { quote:"I show up every single night just to feel a bit better. Ana's the realest person on this app.", name:"@nightowl", role:"regular viewer" },
+    { quote:"She made my whole week with one shout-out. The energy is unmatched.", name:"@mara.k", role:"viewer" },
+    { quote:"Booked Ana for a product drop — sold out the same night. Professional from first message to delivery.", name:"Lumière Skincare", role:"brand partner" },
+    { quote:"Half therapy, half comedy show, all heart. The lion energy is real.", name:"@deeptalks", role:"community member" },
+    { quote:"Our code got more redemptions from one live than a month of ads. Easy to work with, real results.", name:"NovaFit", role:"brand partner" },
+    { quote:"You can tell she actually cares about the people watching. That's rare.", name:"@sunny.rae", role:"viewer" },
+  ],
+
+  /* --- BRAND FAQ ----------------------------------------------- */
+  faqs: [
+    { q:"How quickly can a campaign go live?", a:"Live shout-outs can usually be scheduled within the same week. Content features and full campaigns typically need 1–2 weeks for planning, scripting and review." },
+    { q:"Who is Ana's audience?", a:"A highly engaged, UK-led community that tunes in nightly — drawn to self-love, lifestyle, fashion and genuine conversation. Strongest engagement happens during live streams." },
+    { q:"Do we get usage rights to the content?", a:"Yes. The Spotlight includes 30 days of usage rights; The Tempest includes extended rights. Custom licensing is available — just ask." },
+    { q:"Will we see results after the campaign?", a:"For feature and campaign bundles, you'll get a simple recap of reach, views and engagement so you can measure the impact." },
+    { q:"How do we book?", a:"Use the booking form below or message Ana on TikTok or Instagram. Every request is read personally and you'll hear back within a few days." },
   ],
 
   /* --- TIKTOK VIDEOS (real video IDs to embed) ----------------- */
@@ -70,14 +100,42 @@ const CONFIG = {
   const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
 
   /* ============ BUILD CONTENT ============ */
+  // photo path helpers: real photo first, generated art as fallback
+  const realPhoto = n => `assets/gallery/${String(n).padStart(2,"0")}.jpg`;
+  const artPhoto  = n => `assets/gallery/art-${String(n).padStart(2,"0")}.svg`;
+
   // gallery tiles
   const gg = $("#galleryGrid");
   CONFIG.gallery.forEach((g,i)=>{
     const t=document.createElement("div"); t.className=`tile ${g.cls}`.trim();
-    const src=CONFIG.photos[i];
-    const shot=src?`<img class="shot" src="${src}" alt="${g.cap}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:"";
-    t.innerHTML=`<span class="tile-num">${String(i+1).padStart(2,"0")}</span><div class="ph">${g.emoji}</div>${shot}<div class="cap">${g.cap}</div>`;
+    const n=i+1;
+    const shot=`<img class="shot" src="${realPhoto(n)}" alt="${g.cap}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${artPhoto(n)}'">`;
+    t.innerHTML=`<span class="tile-num">${String(n).padStart(2,"0")}</span><div class="ph">${g.emoji}</div>${shot}<div class="cap">${g.cap}</div>`;
     gg.appendChild(t);
+  });
+
+  // timeline
+  const tl=$("#timelineList");
+  if(tl) CONFIG.timeline.forEach(m=>{
+    const li=document.createElement("div"); li.className="tl-item";
+    li.innerHTML=`<div class="tl-dot"></div><div class="tl-card lg"><span class="tl-year">${m.year}</span><h3>${m.title}</h3><p>${m.text}</p></div>`;
+    tl.appendChild(li);
+  });
+
+  // testimonials
+  const tw=$("#testiGrid");
+  if(tw) CONFIG.testimonials.forEach(t=>{
+    const c=document.createElement("figure"); c.className="testi lg";
+    c.innerHTML=`<blockquote>“${t.quote}”</blockquote><figcaption><b>${t.name}</b><span>${t.role}</span></figcaption>`;
+    tw.appendChild(c);
+  });
+
+  // faq
+  const fq=$("#faqList");
+  if(fq) CONFIG.faqs.forEach((f,i)=>{
+    const item=document.createElement("div"); item.className="faq-item lg";
+    item.innerHTML=`<button class="faq-q" aria-expanded="false" data-cursor><span>${f.q}</span><i>+</i></button><div class="faq-a"><p>${f.a}</p></div>`;
+    fq.appendChild(item);
   });
 
   // bundles
@@ -105,7 +163,7 @@ const CONFIG = {
   // portrait
   const portrait=$("#anaPortrait"), pWrap=$("#storyPortrait");
   portrait.addEventListener("load",()=>pWrap.classList.add("has-photo"));
-  portrait.addEventListener("error",()=>{ portrait.removeAttribute("src"); });
+  portrait.addEventListener("error",()=>{ if(!portrait.dataset.fb){portrait.dataset.fb="1";portrait.src=CONFIG.portraitArt;} });
   portrait.src=CONFIG.portrait;
 
   $("#year").textContent=new Date().getFullYear();
@@ -124,8 +182,8 @@ const CONFIG = {
     const wrap=$("#floatGallery"); const N=isTouch?6:10;
     for(let i=0;i<N;i++){
       const card=document.createElement("div"); card.className="float-card";
-      const src=CONFIG.photos[i%CONFIG.photos.length];
-      card.innerHTML=`<img src="${src}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.innerHTML='<div class=&quot;fc-fallback&quot;>🦁</div>'">`;
+      const n=(i%10)+1;
+      card.innerHTML=`<img src="${realPhoto(n)}" alt="" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${artPhoto(n)}'">`;
       const depth=0.4+Math.random()*0.8;
       card.style.left=(Math.random()*90)+"vw";
       card.style.top=(Math.random()*90)+"vh";
@@ -257,6 +315,15 @@ const CONFIG = {
     location.href=`mailto:${CONFIG.bookingEmail}?subject=${sub}&body=${body}`;
     hint.textContent="Opening your email app… if nothing happens, write to "+CONFIG.bookingEmail;});
 
+  /* ============ FAQ ACCORDION ============ */
+  document.addEventListener("click",e=>{
+    const btn=e.target.closest(".faq-q"); if(!btn)return;
+    const item=btn.closest(".faq-item"), open=item.classList.contains("open");
+    $$(".faq-item.open").forEach(o=>{o.classList.remove("open");o.querySelector(".faq-q").setAttribute("aria-expanded","false");o.querySelector(".faq-q i").textContent="+";});
+    if(!open){item.classList.add("open");btn.setAttribute("aria-expanded","true");btn.querySelector("i").textContent="−";}
+    if(window.ScrollTrigger) setTimeout(()=>ScrollTrigger.refresh(),320);
+  });
+
   /* ============ SMOOTH SCROLL (Lenis) + SCROLLTRIGGER ============ */
   let lenis;
   function initSmooth(){
@@ -284,6 +351,10 @@ const CONFIG = {
     gsap.utils.toArray(".tile").forEach(t=>gsap.from(t,{opacity:0,y:60,scale:.96,duration:.9,ease:"power3.out",scrollTrigger:{trigger:t,start:"top 92%"}}));
     gsap.from(".bundle",{opacity:0,y:70,duration:.9,stagger:.12,ease:"power3.out",scrollTrigger:{trigger:".bundle-grid",start:"top 82%"}});
     gsap.from(".story-portrait",{opacity:0,x:-40,duration:1,ease:"power3.out",scrollTrigger:{trigger:".story-grid",start:"top 80%"}});
+    gsap.utils.toArray(".tl-item").forEach(it=>gsap.from(it,{opacity:0,x:-30,duration:.8,ease:"power3.out",scrollTrigger:{trigger:it,start:"top 88%"}}));
+    gsap.to(".tl-line span",{scaleY:1,ease:"none",scrollTrigger:{trigger:"#timelineList",start:"top 75%",end:"bottom 70%",scrub:true}});
+    gsap.utils.toArray(".testi").forEach(t=>gsap.from(t,{opacity:0,y:50,duration:.85,ease:"power3.out",scrollTrigger:{trigger:t,start:"top 90%"}}));
+    gsap.utils.toArray(".faq-item").forEach(f=>gsap.from(f,{opacity:0,y:26,duration:.7,ease:"power2.out",scrollTrigger:{trigger:f,start:"top 92%"}}));
     gsap.to("#storyMark",{yPercent:-26,ease:"none",scrollTrigger:{trigger:".story",start:"top bottom",end:"bottom top",scrub:true}});
     gsap.from(".tt-embeds blockquote, .tt-card-fallback",{opacity:0,y:40,stagger:.1,duration:.8,ease:"power2.out",scrollTrigger:{trigger:".tt-embeds",start:"top 85%"}});
     gsap.from(".field,.contact-side",{opacity:0,y:30,duration:.8,stagger:.06,ease:"power2.out",scrollTrigger:{trigger:".contact-wrap",start:"top 84%"}});

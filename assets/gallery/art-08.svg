@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+<defs>
+ <radialGradient id="g1_7" cx="20.838794389068344%" cy="30.563096351003093%" r="70%">
+  <stop offset="0%" stop-color="#E8B84B" stop-opacity="0.55"/><stop offset="55%" stop-color="#E8B84B" stop-opacity="0.06"/><stop offset="100%" stop-color="#0A0A0B" stop-opacity="0"/>
+ </radialGradient>
+ <radialGradient id="g2_7" cx="69.88502353130133%" cy="91.9839504051157%" r="65%">
+  <stop offset="0%" stop-color="#FE2C55" stop-opacity="0.40"/><stop offset="60%" stop-color="#FE2C55" stop-opacity="0.04"/><stop offset="100%" stop-color="#0A0A0B" stop-opacity="0"/>
+ </radialGradient>
+ <linearGradient id="txt_7" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F3EEE6"/><stop offset="100%" stop-color="#E8B84B"/></linearGradient>
+ <filter id="grain_7"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+ <filter id="blur_7"><feGaussianBlur stdDeviation="34"/></filter>
+</defs>
+<rect width="600" height="800" fill="#0A0A0B"/>
+<rect width="600" height="800" fill="url(#g1_7)"/>
+<rect width="600" height="800" fill="url(#g2_7)"/>
+<g stroke="#E8B84B" fill="none" opacity="0.55"><circle cx="424.51759302964615" cy="483.7019801307182" r="40" stroke-width="1.33" opacity="0.63"/><circle cx="424.51759302964615" cy="483.7019801307182" r="74" stroke-width="0.61" opacity="0.58"/><circle cx="424.51759302964615" cy="483.7019801307182" r="108" stroke-width="1.32" opacity="0.52"/><circle cx="424.51759302964615" cy="483.7019801307182" r="142" stroke-width="0.78" opacity="0.46"/><circle cx="424.51759302964615" cy="483.7019801307182" r="176" stroke-width="1.08" opacity="0.41"/><circle cx="424.51759302964615" cy="483.7019801307182" r="210" stroke-width="1.49" opacity="0.35"/><circle cx="424.51759302964615" cy="483.7019801307182" r="244" stroke-width="1.34" opacity="0.29"/><circle cx="424.51759302964615" cy="483.7019801307182" r="278" stroke-width="1.58" opacity="0.24"/><circle cx="424.51759302964615" cy="483.7019801307182" r="312" stroke-width="1.25" opacity="0.18"/></g>
+<rect x="16" y="16" width="568" height="768" fill="none" stroke="#E8B84B" stroke-opacity="0.25" rx="6"/>
+<text x="34" y="760" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="150" fill="url(#txt_7)" opacity="0.9">08</text>
+<text x="40" y="70" font-family="'Courier New', monospace" letter-spacing="8" font-size="22" fill="#F3EEE6" opacity="0.8">GIFTS</text>
+<text x="560" y="775" text-anchor="end" font-family="'Courier New', monospace" letter-spacing="4" font-size="16" fill="#E8B84B" opacity="0.8">@khaleesianahita</text>
+<rect width="600" height="800" filter="url(#grain_7)" opacity="0.05"/>
+</svg>

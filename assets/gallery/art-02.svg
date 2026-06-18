@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+<defs>
+ <radialGradient id="g1_1" cx="62.189523767209494%" cy="41.73636019440008%" r="70%">
+  <stop offset="0%" stop-color="#25F4EE" stop-opacity="0.55"/><stop offset="55%" stop-color="#25F4EE" stop-opacity="0.06"/><stop offset="100%" stop-color="#0A0A0B" stop-opacity="0"/>
+ </radialGradient>
+ <radialGradient id="g2_1" cx="79.55728219497749%" cy="68.89536074764672%" r="65%">
+  <stop offset="0%" stop-color="#E8B84B" stop-opacity="0.40"/><stop offset="60%" stop-color="#E8B84B" stop-opacity="0.04"/><stop offset="100%" stop-color="#0A0A0B" stop-opacity="0"/>
+ </radialGradient>
+ <linearGradient id="txt_1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F3EEE6"/><stop offset="100%" stop-color="#25F4EE"/></linearGradient>
+ <filter id="grain_1"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+ <filter id="blur_1"><feGaussianBlur stdDeviation="34"/></filter>
+</defs>
+<rect width="600" height="800" fill="#0A0A0B"/>
+<rect width="600" height="800" fill="url(#g1_1)"/>
+<rect width="600" height="800" fill="url(#g2_1)"/>
+<g stroke="#25F4EE" fill="none" opacity="0.55"><circle cx="343.53065559857714" cy="499.9437968351285" r="40" stroke-width="0.94" opacity="0.63"/><circle cx="343.53065559857714" cy="499.9437968351285" r="74" stroke-width="0.90" opacity="0.58"/><circle cx="343.53065559857714" cy="499.9437968351285" r="108" stroke-width="0.76" opacity="0.52"/><circle cx="343.53065559857714" cy="499.9437968351285" r="142" stroke-width="0.72" opacity="0.46"/><circle cx="343.53065559857714" cy="499.9437968351285" r="176" stroke-width="1.57" opacity="0.41"/><circle cx="343.53065559857714" cy="499.9437968351285" r="210" stroke-width="0.95" opacity="0.35"/><circle cx="343.53065559857714" cy="499.9437968351285" r="244" stroke-width="1.25" opacity="0.29"/><circle cx="343.53065559857714" cy="499.9437968351285" r="278" stroke-width="0.88" opacity="0.24"/><circle cx="343.53065559857714" cy="499.9437968351285" r="312" stroke-width="0.69" opacity="0.18"/></g>
+<rect x="16" y="16" width="568" height="768" fill="none" stroke="#25F4EE" stroke-opacity="0.25" rx="6"/>
+<text x="34" y="760" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="150" fill="url(#txt_1)" opacity="0.9">02</text>
+<text x="40" y="70" font-family="'Courier New', monospace" letter-spacing="8" font-size="22" fill="#F3EEE6" opacity="0.8">LIVE</text>
+<text x="560" y="775" text-anchor="end" font-family="'Courier New', monospace" letter-spacing="4" font-size="16" fill="#25F4EE" opacity="0.8">@khaleesianahita</text>
+<rect width="600" height="800" filter="url(#grain_1)" opacity="0.05"/>
+</svg>
