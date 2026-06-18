@@ -5,7 +5,7 @@
    EDIT THESE FIRST — your real details live here:
    ================================================================= */
 const CONFIG = {
-  bookingEmail: "hello@khaleesianahita.com",   // ← set Ana's real booking inbox
+  bookingEmail: "contact@khaleesianahita.com",   // ← Ana's booking inbox
   socials: {
     tiktok: "https://www.tiktok.com/@khaleesianahita",
     instagram: "https://www.instagram.com/khaleesianahita/",
@@ -22,15 +22,19 @@ const CONFIG = {
       blurb:"A storm of coverage across every channel.",
       perks:["Live takeover / themed stream","3 pieces of content (TikTok + IG)","Story series across the campaign","Extended usage rights","Priority calendar + reporting"] },
   ],
+  // Temporary placeholder photos pulled from the web (LoremFlickr, themed + CC).
+  // Swap each `img` for Ana's real stream shots later — or drop files in assets/
+  // and point img to "assets/gallery/your-file.jpg". If an image fails to load,
+  // the tile gracefully falls back to its emoji + gradient.
   gallery: [
-    { cls:"big",  cap:"Opening the night", emoji:"🎙️" },
-    { cls:"",     cap:"Chat going feral",  emoji:"💬" },
-    { cls:"tall", cap:"The roar",          emoji:"🦁" },
-    { cls:"",     cap:"Self-love hour",    emoji:"💛" },
-    { cls:"",     cap:"Coffee & co-hosts", emoji:"☕" },
-    { cls:"tall", cap:"Fit check",         emoji:"✨" },
-    { cls:"",     cap:"Late-night talks",  emoji:"🌙" },
-    { cls:"big",  cap:"Gifts raining in",  emoji:"🌬️" },
+    { cls:"big",  cap:"Opening the night", emoji:"🎙️", img:"https://loremflickr.com/1000/800/microphone,studio/all?lock=12" },
+    { cls:"",     cap:"Chat going feral",  emoji:"💬", img:"https://loremflickr.com/800/800/neon,light/all?lock=23" },
+    { cls:"tall", cap:"The roar",          emoji:"🦁", img:"https://loremflickr.com/800/1000/lion/all?lock=5" },
+    { cls:"",     cap:"Golden hour",       emoji:"💛", img:"https://loremflickr.com/800/800/golden,light/all?lock=31" },
+    { cls:"",     cap:"Coffee & co-hosts", emoji:"☕", img:"https://loremflickr.com/800/800/coffee/all?lock=8" },
+    { cls:"tall", cap:"Fit check",         emoji:"✨", img:"https://loremflickr.com/800/1000/fashion,style/all?lock=44" },
+    { cls:"",     cap:"Late-night talks",  emoji:"🌙", img:"https://loremflickr.com/800/800/city,night/all?lock=19" },
+    { cls:"big",  cap:"The gifts rain in", emoji:"🌬️", img:"https://loremflickr.com/1000/800/fireworks,gold/all?lock=27" },
   ],
 };
 
@@ -48,7 +52,10 @@ const CONFIG = {
   CONFIG.gallery.forEach(g => {
     const t = document.createElement("div");
     t.className = `tile ${g.cls}`.trim();
-    t.innerHTML = `<div class="ph">${g.emoji}</div><div class="cap">${g.cap}</div>`;
+    const shot = g.img
+      ? `<img class="shot" src="${g.img}" alt="${g.cap}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`
+      : "";
+    t.innerHTML = `<div class="ph">${g.emoji}</div>${shot}<div class="cap">${g.cap}</div>`;
     galleryGrid.appendChild(t);
   });
 
