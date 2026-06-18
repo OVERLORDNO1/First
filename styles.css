@@ -183,10 +183,22 @@ section{padding:clamp(90px,14vh,170px) clamp(20px,5vw,56px);position:relative;ma
   background:linear-gradient(140deg,rgba(232,184,75,.10),transparent 55%),linear-gradient(0deg,rgba(0,0,0,.7),transparent 60%);
   opacity:.8;transition:opacity .4s;z-index:1}
 .tile .cap{position:relative;z-index:2;padding:16px;font-family:"Space Grotesk",sans-serif;
-  font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bone);transform:translateY(6px);opacity:0;transition:.4s var(--ease)}
-.tile:hover .ph{transform:scale(1.12);opacity:.8}
+  font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bone);transform:translateY(6px);opacity:.85;transition:.4s var(--ease)}
+.tile .tile-num{position:absolute;top:14px;left:14px;z-index:2;font-family:"Bodoni Moda",serif;
+  font-size:.9rem;color:var(--ember);opacity:.7;letter-spacing:.05em}
+.tile:hover .ph{transform:scale(1.12);opacity:.9}
 .tile:hover::before{opacity:1}
 .tile:hover .cap{transform:translateY(0);opacity:1}
+/* poster tints for photo-less tiles */
+.tile:nth-child(1) .ph{background:radial-gradient(120% 120% at 30% 20%,rgba(232,184,75,.16),transparent 60%)}
+.tile:nth-child(2) .ph{background:radial-gradient(120% 120% at 70% 30%,rgba(201,132,47,.18),transparent 60%)}
+.tile:nth-child(3) .ph{background:radial-gradient(120% 120% at 50% 30%,rgba(232,184,75,.22),transparent 65%)}
+.tile:nth-child(4) .ph{background:radial-gradient(120% 120% at 40% 70%,rgba(207,227,255,.10),transparent 60%)}
+.tile:nth-child(5) .ph{background:radial-gradient(120% 120% at 60% 40%,rgba(122,74,30,.30),transparent 60%)}
+.tile:nth-child(6) .ph{background:radial-gradient(120% 120% at 50% 20%,rgba(232,184,75,.18),transparent 60%)}
+.tile:nth-child(7) .ph{background:radial-gradient(120% 120% at 30% 60%,rgba(207,227,255,.08),transparent 60%)}
+.tile:nth-child(8) .ph{background:radial-gradient(120% 120% at 50% 50%,rgba(201,132,47,.20),transparent 65%)}
+.tile .ph{font-size:3rem}
 
 /* =================================================================
    BUNDLES

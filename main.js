@@ -22,19 +22,19 @@ const CONFIG = {
       blurb:"A storm of coverage across every channel.",
       perks:["Live takeover / themed stream","3 pieces of content (TikTok + IG)","Story series across the campaign","Extended usage rights","Priority calendar + reporting"] },
   ],
-  // Temporary placeholder photos pulled from the web (LoremFlickr, themed + CC).
-  // Swap each `img` for Ana's real stream shots later — or drop files in assets/
-  // and point img to "assets/gallery/your-file.jpg". If an image fails to load,
-  // the tile gracefully falls back to its emoji + gradient.
+  // Gallery tiles render as on-brand gold/obsidian posters (no external images).
+  // To use Ana's real photos later, add an `img` to any item, e.g.
+  //   { cls:"big", cap:"Opening the night", emoji:"🎙️", img:"assets/opening.jpg" }
+  // and it will show with the same styling (graceful fallback if it fails).
   gallery: [
-    { cls:"big",  cap:"Opening the night", emoji:"🎙️", img:"https://loremflickr.com/1000/800/microphone,studio/all?lock=12" },
-    { cls:"",     cap:"Chat going feral",  emoji:"💬", img:"https://loremflickr.com/800/800/neon,light/all?lock=23" },
-    { cls:"tall", cap:"The roar",          emoji:"🦁", img:"https://loremflickr.com/800/1000/lion/all?lock=5" },
-    { cls:"",     cap:"Golden hour",       emoji:"💛", img:"https://loremflickr.com/800/800/golden,light/all?lock=31" },
-    { cls:"",     cap:"Coffee & co-hosts", emoji:"☕", img:"https://loremflickr.com/800/800/coffee/all?lock=8" },
-    { cls:"tall", cap:"Fit check",         emoji:"✨", img:"https://loremflickr.com/800/1000/fashion,style/all?lock=44" },
-    { cls:"",     cap:"Late-night talks",  emoji:"🌙", img:"https://loremflickr.com/800/800/city,night/all?lock=19" },
-    { cls:"big",  cap:"The gifts rain in", emoji:"🌬️", img:"https://loremflickr.com/1000/800/fireworks,gold/all?lock=27" },
+    { cls:"big",  cap:"Opening the night", emoji:"🎙️" },
+    { cls:"",     cap:"Chat going feral",  emoji:"💬" },
+    { cls:"tall", cap:"The roar",          emoji:"🦁" },
+    { cls:"",     cap:"Golden hour",       emoji:"💛" },
+    { cls:"",     cap:"Coffee & co-hosts", emoji:"☕" },
+    { cls:"tall", cap:"Fit check",         emoji:"✨" },
+    { cls:"",     cap:"Late-night talks",  emoji:"🌙" },
+    { cls:"big",  cap:"The gifts rain in", emoji:"🌬️" },
   ],
 };
 
@@ -49,13 +49,14 @@ const CONFIG = {
      BUILD DYNAMIC CONTENT (gallery + bundles)
      =========================================================== */
   const galleryGrid = $("#galleryGrid");
-  CONFIG.gallery.forEach(g => {
+  CONFIG.gallery.forEach((g, i) => {
     const t = document.createElement("div");
     t.className = `tile ${g.cls}`.trim();
     const shot = g.img
       ? `<img class="shot" src="${g.img}" alt="${g.cap}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`
       : "";
-    t.innerHTML = `<div class="ph">${g.emoji}</div>${shot}<div class="cap">${g.cap}</div>`;
+    const num = String(i + 1).padStart(2, "0");
+    t.innerHTML = `<span class="tile-num">${num}</span><div class="ph">${g.emoji}</div>${shot}<div class="cap">${g.cap}</div>`;
     galleryGrid.appendChild(t);
   });
 
