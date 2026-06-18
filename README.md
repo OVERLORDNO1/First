@@ -1,33 +1,39 @@
-# For Ana 🌬️👑 — *Khaleesi of the Wind*
+# ANA — *Khaleesi of the Wind* 🦁🌬️
 
-A surprise interactive website made for **Ana** ([@khaleesianahita](https://www.tiktok.com/@khaleesianahita) on TikTok) — full of crazy animations and cursor effects.
+A high-end, cinematic creator site built for **Ana** ([@khaleesianahita](https://www.tiktok.com/@khaleesianahita)) — a surprise to launch her next chapter. Molten-obsidian luxury: gold on near-black, a roaring lion sigil, WebGL embers, and GSAP scroll storytelling. Built mobile-first.
 
-## ✨ What's inside
-- **Custom glowing cursor** with a sparkle trail that follows you
-- **Drifting wind petals & butterflies** floating in the background (a nod to *Anahita*, goddess of water & wind 🌬️)
-- **Confetti on every click** + a corner-cannon "Surprise me" button
-- **Magnetic buttons** that lean toward your cursor
-- **3D tilt cards** and a hero title that follows your mouse
-- **Typewriter** hype lines and a shimmering gold/rose theme
-- A **magic orb** you can tap to collect crowns (with milestone surprises 👑)
-- **Fireworks finale** — hit "Light the sky" 🎆
-- Hidden easter egg: type **`ana`** anywhere 💖
-- Respects `prefers-reduced-motion` and adapts for touch screens
+## ✨ Highlights
+- **Roaring lion sigil** — tap it for a shockwave, ember burst, screen shake and a low roar (the page's signature moment)
+- **WebGL ember/wind field** (three.js) drifting behind everything, with cursor parallax
+- **GSAP scroll choreography** — staggered reveals, parallax watermark, animated stat counters
+- **Glassmorphism** panels with gold hairline borders, film grain + vignette atmosphere
+- **The Story of Ana** — an editorial long-form section
+- **From the Live** — a gallery wall ready for real stream clips/photos
+- **Work with Ana** — a creator media-kit / rate card with three bookable bundles (The Gust · The Spotlight · The Tempest)
+- **Booking form** that composes an email, plus direct TikTok & Instagram links
+- Fully **responsive** + respects `prefers-reduced-motion`; custom cursor on desktop only
 
-## ▶️ How to view it
-Just open `index.html` in any modern browser — no build step, no dependencies.
+## 🛠 Make it hers — edit `main.js` → `CONFIG`
+Everything personalisable lives in one object at the top of `main.js`:
+- `bookingEmail` — **set Ana's real booking inbox** (currently a placeholder)
+- `socials` — TikTok / Instagram URLs
+- `bundles` — names, prices (GBP, indicative), and perks
+- `gallery` — captions/emoji per tile (swap in real images by giving each `.tile` a background image)
+
+Follower numbers (314K TikTok / 13K IG) are public estimates — tweak them in `index.html` if needed.
+
+## ▶️ View it
+Open `index.html` in any modern browser (the animation libraries load from a CDN, so you need internet).
 
 ```bash
-# optional: serve locally
-python3 -m http.server 8000
-# then open http://localhost:8000
+python3 -m http.server 8000   # then open http://localhost:8000
 ```
 
 ## 🗂 Files
 | File | Purpose |
 |------|---------|
-| `index.html` | Page structure & content |
-| `style.css`  | Theme, layout & CSS animations |
-| `script.js`  | Cursor, particles, confetti & interactions |
+| `index.html` | Structure & content |
+| `styles.css` | Theme, layout & responsive design |
+| `main.js` | WebGL embers, roaring lion, GSAP scroll, form & config |
 
-Made with ✨ and a lot of confetti.
+Made with fire & wind. 🔥🌬️
