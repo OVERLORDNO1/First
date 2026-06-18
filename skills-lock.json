@@ -25,6 +25,12 @@
       "skillPath": ".claude/skills/gsap-scrolltrigger/SKILL.md",
       "computedHash": "a084c870960fe6eea6090925245df29b942e627c65db446dfa60a5b9d1f4e834"
     },
+    "hyperframes": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/hyperframes/SKILL.md",
+      "computedHash": "c7c236d562fd48ea967dd8bc10987b94cac4277f18b88224378118bfd29c45cc"
+    },
     "threejs-webgl": {
       "source": "freshtechbro/claudedesignskills",
       "sourceType": "github",
