@@ -4,28 +4,32 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>ANA — Khaleesi of the Wind</title>
-<meta name="description" content="Ana (@khaleesianahita) — creator, performer, force of nature. Live every night. Book a collaboration." />
+<meta name="description" content="Ana (@khaleesianahita) — creator, performer, force of nature. Live every night on TikTok. Book a collaboration." />
 <meta name="theme-color" content="#0A0A0B" />
-
-<!-- Open Graph -->
 <meta property="og:title" content="ANA — Khaleesi of the Wind" />
 <meta property="og:description" content="Creator · performer · force of nature. 314K on TikTok. Book a collaboration." />
 <meta property="og:type" content="website" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,400&family=Manrope:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,400&family=Manrope:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- WebGL ember/wind field -->
+  <!-- SVG defs: liquid-glass refraction filter + gradients -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="liquid">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="7" result="n"/>
+      <feGaussianBlur in="n" stdDeviation="1.4" result="nb"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
   <canvas id="webgl"></canvas>
-  <!-- 2D fx (roar shockwave, embers) -->
+  <div class="float-gallery" id="floatGallery" aria-hidden="true"></div>
   <canvas id="fx"></canvas>
   <div class="grain" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
-
-  <!-- custom cursor (desktop) -->
   <div class="cursor" id="cursor"></div>
 
   <!-- Loader -->
@@ -39,15 +43,15 @@
   <header class="nav" id="nav">
     <a class="nav-logo" href="#top" data-cursor>ANA<span>·</span></a>
     <nav class="nav-links" id="navLinks">
+      <a href="#numbers" data-cursor>Numbers</a>
       <a href="#story" data-cursor>Story</a>
       <a href="#gallery" data-cursor>The Live</a>
+      <a href="#tiktok" data-cursor>TikTok</a>
       <a href="#bundles" data-cursor>Work with Ana</a>
       <a href="#contact" data-cursor>Contact</a>
     </nav>
     <div class="nav-right">
-      <a class="nav-social" href="https://www.tiktok.com/@khaleesianahita" target="_blank" rel="noopener" aria-label="TikTok" data-cursor>TikTok</a>
-      <a class="nav-social" href="https://www.instagram.com/khaleesianahita/" target="_blank" rel="noopener" aria-label="Instagram" data-cursor>Instagram</a>
-      <a class="nav-cta" href="#bundles" data-cursor>Book</a>
+      <a class="nav-cta tt" href="https://www.tiktok.com/@khaleesianahita" target="_blank" rel="noopener" data-cursor>Follow</a>
     </div>
     <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span></button>
   </header>
@@ -78,18 +82,8 @@
         <div class="roar-hint" id="roarHint">tap the lion</div>
       </div>
 
-      <h1 class="hero-title" id="heroTitle">
-        <span class="word">ANA</span>
-      </h1>
+      <h1 class="hero-title"><span class="word" data-text="ANA">ANA</span></h1>
       <p class="hero-sub">Khaleesi of the Wind — creator, performer, <em>force of nature.</em></p>
-
-      <div class="hero-stats">
-        <div class="stat"><b data-count="314">0</b><span>K TikTok</span></div>
-        <div class="stat divider"></div>
-        <div class="stat"><b data-count="13">0</b><span>K Instagram</span></div>
-        <div class="stat divider"></div>
-        <div class="stat"><b>∞</b><span>nights live</span></div>
-      </div>
 
       <div class="hero-cta">
         <a class="btn solid" href="#bundles" data-cursor>Work with Ana</a>
@@ -99,16 +93,33 @@
       <div class="scrollcue"><span></span>scroll</div>
     </section>
 
+    <!-- NUMBERS / ACHIEVEMENTS -->
+    <section class="numbers" id="numbers">
+      <p class="section-eyebrow">001 — By the numbers</p>
+      <h2 class="section-head">Proof she <em>moves</em><br/>the room.</h2>
+      <div class="stat-grid" id="statGrid"></div>
+      <div class="badges" id="badges"></div>
+      <p class="muted center fineprint">Figures are indicative milestones — edit any of them in <code>main.js → CONFIG.stats</code>.</p>
+    </section>
+
     <!-- STORY -->
     <section class="story" id="story">
-      <p class="section-eyebrow">001 — The Story</p>
-      <h2 class="section-head reveal-head">They named her<br/>for a <em>goddess.</em></h2>
-      <div class="story-body">
-        <p class="lead"><span class="dropcap">A</span>nahita — keeper of the waters and the winds, worshipped long before the world had screens to worship through. Centuries later a girl in Britain pointed a camera at herself, pressed <em>go live</em>, and the same old wind began to move.</p>
-        <p>You know her as <strong>Ana</strong>. Khaleesi to the ones who show up every night — the regulars, the lurkers, the strangers who stayed. She built a room out of nothing but a lens and her nerve, and turned it into a place people come to feel <em>better about themselves.</em></p>
-        <p>Self-love isn't a slogan on her stream; it's the whole architecture. She says the thing you needed to hear before you knew you needed it, then laughs so you don't get sentimental about it. A performer long before the algorithm — stage instincts, broadcast voice, comic timing — all of it pointed at one job: make the person watching feel seen.</p>
-        <p>The lion was never a costume. It's how she enters a room. Loud when it counts, still when it matters, impossible to ignore either way.</p>
-        <p class="story-close">This site is the start of the next chapter — the journey going from <em>nightly live</em> to a name brands build around. Welcome to the court.</p>
+      <div class="story-grid">
+        <div class="story-portrait lg" id="storyPortrait">
+          <img id="anaPortrait" alt="Ana" referrerpolicy="no-referrer" />
+          <div class="portrait-fallback">🦁<span>add Ana's photo</span></div>
+          <span class="portrait-tag">ANA · KHALEESI</span>
+        </div>
+        <div class="story-col">
+          <p class="section-eyebrow">002 — The Story</p>
+          <h2 class="section-head">They named her<br/>for a <em>goddess.</em></h2>
+          <div class="story-body">
+            <p class="lead"><span class="dropcap">A</span>nahita — keeper of the waters and the winds, worshipped long before the world had screens to worship through. Centuries later a girl in Britain pointed a camera at herself, pressed <em>go live</em>, and the same old wind began to move.</p>
+            <p>You know her as <strong>Ana</strong>. Khaleesi to the ones who show up every night — the regulars, the lurkers, the strangers who stayed. She built a room out of nothing but a lens and her nerve, and turned it into a place people come to feel <em>better about themselves.</em></p>
+            <p>Self-love isn't a slogan on her stream; it's the whole architecture. A performer long before the algorithm — stage instincts, broadcast voice, comic timing — all of it pointed at one job: make the person watching feel seen.</p>
+            <p class="story-close">This site is the start of the next chapter — from <em>nightly live</em> to a name brands build around. Welcome to the court.</p>
+          </div>
+        </div>
       </div>
       <div class="story-watermark" id="storyMark">🦁</div>
     </section>
@@ -116,80 +127,63 @@
     <!-- GALLERY -->
     <section class="gallery" id="gallery">
       <div class="gallery-intro">
-        <p class="section-eyebrow">002 — From the Live</p>
+        <p class="section-eyebrow">003 — From the Live</p>
         <h2 class="section-head">Moments from<br/>the <em>broadcast.</em></h2>
-        <p class="muted">A wall of nights. Drop in your real stream clips and photos — each tile is ready for an image.</p>
+        <p class="muted">A wall of nights. Drop Ana's real clips and photos in <code>assets/gallery/</code> and they appear here automatically.</p>
       </div>
       <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
+    <!-- TIKTOK -->
+    <section class="tiktok" id="tiktok">
+      <div class="tt-glow"></div>
+      <p class="section-eyebrow tt-eye">004 — On TikTok</p>
+      <h2 class="neon-sign" id="neonSign"><span>LIVE</span> EVERY NIGHT</h2>
+      <p class="muted center">Straight from <a href="https://www.tiktok.com/@khaleesianahita" target="_blank" rel="noopener" data-cursor>@khaleesianahita</a> — real videos, loaded live.</p>
+      <div class="tt-embeds" id="ttEmbeds"></div>
+      <a class="btn tt-btn" href="https://www.tiktok.com/@khaleesianahita" target="_blank" rel="noopener" data-cursor>Open TikTok profile ↗</a>
+    </section>
+
     <!-- BUNDLES -->
     <section class="bundles" id="bundles">
-      <p class="section-eyebrow">003 — Work with Ana</p>
+      <p class="section-eyebrow">005 — Work with Ana</p>
       <h2 class="section-head">Put your brand<br/>in front of <em>her court.</em></h2>
-      <p class="muted center">Live shout-outs, content features, full campaigns. Pick a bundle or build your own — every booking is read by Ana's team personally.</p>
-
+      <p class="muted center">Live shout-outs, content features, full campaigns. Pick a bundle or build your own — every booking is read personally.</p>
       <div class="bundle-grid" id="bundleGrid"></div>
-
-      <p class="bundle-note">Prices in GBP and indicative — final quote depends on dates, exclusivity and deliverables. <a href="#contact" data-cursor>Ask for a custom bundle →</a></p>
+      <p class="bundle-note">Prices in GBP and indicative. <a href="#contact" data-cursor>Ask for a custom bundle →</a></p>
     </section>
 
     <!-- CONTACT -->
     <section class="contact" id="contact">
-      <p class="section-eyebrow">004 — Booking</p>
+      <p class="section-eyebrow">006 — Booking</p>
       <h2 class="section-head">Send a<br/><em>message.</em></h2>
-
       <div class="contact-wrap">
-        <form class="contact-form" id="bookForm" novalidate>
-          <div class="field">
-            <label for="f-name">Your name</label>
-            <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Jane from Brand Co." />
-          </div>
-          <div class="field">
-            <label for="f-email">Email</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@brand.com" />
-          </div>
-          <div class="field">
-            <label for="f-bundle">Bundle</label>
+        <form class="contact-form lg" id="bookForm" novalidate>
+          <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Jane from Brand Co." /></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@brand.com" /></div>
+          <div class="field"><label for="f-bundle">Bundle</label>
             <select id="f-bundle" name="bundle">
               <option>The Gust — Live shout-out</option>
               <option>The Spotlight — Feature package</option>
               <option>The Tempest — Full campaign</option>
               <option>Custom / not sure yet</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="f-budget">Budget (optional)</label>
-            <input id="f-budget" name="budget" type="text" placeholder="£" />
-          </div>
-          <div class="field wide">
-            <label for="f-msg">What do you have in mind?</label>
-            <textarea id="f-msg" name="message" rows="4" placeholder="Tell Ana about the brand, the product and your timing."></textarea>
-          </div>
+            </select></div>
+          <div class="field"><label for="f-budget">Budget (optional)</label><input id="f-budget" name="budget" type="text" placeholder="£" /></div>
+          <div class="field wide"><label for="f-msg">What do you have in mind?</label><textarea id="f-msg" name="message" rows="4" placeholder="Tell Ana about the brand, the product and your timing."></textarea></div>
           <button class="btn solid wide" type="submit" data-cursor>Send booking request</button>
           <p class="form-hint" id="formHint"></p>
         </form>
-
-        <aside class="contact-side glass">
+        <aside class="contact-side lg">
           <h3>Find Ana</h3>
           <a class="social-row" href="https://www.tiktok.com/@khaleesianahita" target="_blank" rel="noopener" data-cursor>
-            <span class="social-ic">◆</span>
-            <span><b>TikTok</b><br/>@khaleesianahita · 314K</span>
-            <span class="arr">↗</span>
-          </a>
+            <span class="social-ic tt-cyan">◆</span><span><b>TikTok</b><br/>@khaleesianahita · 314K</span><span class="arr">↗</span></a>
           <a class="social-row" href="https://www.instagram.com/khaleesianahita/" target="_blank" rel="noopener" data-cursor>
-            <span class="social-ic">◇</span>
-            <span><b>Instagram</b><br/>@khaleesianahita · 13K</span>
-            <span class="arr">↗</span>
-          </a>
-          <div class="side-note">
-            <p>For press &amp; partnerships, the form sends straight to the booking inbox. Expect a reply within a few days.</p>
-          </div>
+            <span class="social-ic">◇</span><span><b>Instagram</b><br/>@khaleesianahita · 13K</span><span class="arr">↗</span></a>
+          <div class="side-note"><p>The form sends straight to the booking inbox. Expect a reply within a few days.</p></div>
         </aside>
       </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="footer">
       <div class="footer-lion">🦁</div>
       <p class="footer-big">A new journey<br/><em>starts here.</em></p>
@@ -201,11 +195,11 @@
     </footer>
   </main>
 
-  <!-- Libraries (client-side CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
