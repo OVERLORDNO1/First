@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Ana 🌬️ — Khaleesi of the Wind</title>
+<meta name="description" content="A surprise for Ana (@khaleesianahita) 🦁🌬️" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital@0;1&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Animated layers -->
+  <canvas id="bgCanvas"></canvas>
+  <canvas id="fxCanvas"></canvas>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Loading veil -->
+  <div class="veil" id="veil">
+    <div class="veil-crown">♛</div>
+    <div class="veil-text">Summoning the wind…</div>
+  </div>
+
+  <!-- Floating action: replay surprise -->
+  <button class="surprise-btn" id="surpriseBtn" aria-label="Surprise">
+    ✨ Surprise me
+  </button>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="crown" data-tilt>♛</div>
+      <p class="eyebrow">A little something for</p>
+      <h1 class="title" id="anaTitle" data-tilt>ANA</h1>
+      <p class="subtitle">
+        <span class="shimmer">Khaleesi of the Wind</span> &nbsp;🌬️🦁
+      </p>
+      <p class="handle" id="handleLine">@khaleesianahita</p>
+      <p class="typed" id="typed"></p>
+      <div class="cta-row">
+        <a class="btn primary magnetic" href="https://www.tiktok.com/@khaleesianahita" target="_blank" rel="noopener">
+          Open her TikTok ↗
+        </a>
+        <button class="btn ghost magnetic" id="petalBtn">Make it rain petals 🌸</button>
+      </div>
+      <div class="scroll-hint">scroll ✦</div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>ANA 🌬️</span><span>·</span><span>KHALEESI</span><span>·</span><span>SELF-LOVE</span><span>·</span><span>COFFEE ☕</span><span>·</span><span>FEARLESS</span><span>·</span><span>ANA 🌬️</span><span>·</span><span>KHALEESI</span><span>·</span><span>SELF-LOVE</span><span>·</span><span>COFFEE ☕</span><span>·</span><span>FEARLESS</span><span>·</span>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <section class="cards" id="cards">
+      <h2 class="section-title">Why you're <em>iconic</em></h2>
+      <div class="card-grid">
+        <article class="card tilt-card">
+          <div class="card-emoji">🌬️</div>
+          <h3>Anahita</h3>
+          <p>Named for the goddess of water &amp; wind. No wonder you move rooms like a breeze.</p>
+        </article>
+        <article class="card tilt-card">
+          <div class="card-emoji">🦁</div>
+          <h3>Lion heart</h3>
+          <p>Khaleesi energy. You walk in like you own the throne — because you do.</p>
+        </article>
+        <article class="card tilt-card">
+          <div class="card-emoji">💖</div>
+          <h3>Self-love queen</h3>
+          <p>Turning confidence into a whole aesthetic and bringing everyone along.</p>
+        </article>
+        <article class="card tilt-card">
+          <div class="card-emoji">☕</div>
+          <h3>Coffee time</h3>
+          <p>Some hero's relax with tea. You? Espresso and main-character energy.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE PLAYGROUND -->
+    <section class="play" id="play">
+      <h2 class="section-title">Tap the orb ✦</h2>
+      <p class="play-sub">go on… click it as many times as you want</p>
+      <div class="orb-wrap">
+        <button class="orb" id="orb" aria-label="Magic orb">
+          <span class="orb-core">♛</span>
+        </button>
+      </div>
+      <p class="counter" id="counter">crowns collected: 0</p>
+    </section>
+
+    <!-- FINALE -->
+    <section class="finale" id="finale">
+      <h2 class="finale-title">You're one of a kind, Ana.</h2>
+      <p class="finale-text">Keep flying. The wind always favours its own. 🌬️👑</p>
+      <button class="btn primary big magnetic" id="fireworksBtn">Light the sky 🎆</button>
+      <p class="signoff">made with ✨ &amp; a lot of confetti</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
