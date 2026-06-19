@@ -142,7 +142,7 @@ const CONFIG = {
   const bg=$("#bundleGrid");
   CONFIG.bundles.forEach(b=>{
     const c=document.createElement("article"); c.className=`bundle lg${b.feature?" feature":""}`;
-    c.innerHTML=`<span class="tier-tag">${b.tag}</span><h3>${b.name}</h3><p class="blurb">${b.blurb}</p>
+    c.innerHTML=`${b.feature?'<span class="star-border"></span>':''}<span class="tier-tag">${b.tag}</span><h3>${b.name}</h3><p class="blurb">${b.blurb}</p>
       <div class="price">${b.price}<small>${b.unit}</small></div>
       <ul>${b.perks.map(p=>`<li>${p}</li>`).join("")}</ul>
       <button class="btn line pick" data-bundle="${b.name}" data-cursor>Book ${b.name}</button>`;
@@ -235,7 +235,7 @@ const CONFIG = {
   }
 
   /* ============ 2D FX — roar ============ */
-  const fx=$("#fx"),fxc=fx.getContext("2d");let sparks=[],rings=[];
+  const fx=$("#fx"),fxc=fx.getContext("2d");let sparks=[],rings=[],clicks=[];
   const sizeFx=()=>{fx.width=innerWidth;fx.height=innerHeight;};sizeFx();addEventListener("resize",sizeFx);
   function roar(){
     const r=$("#lion").getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
@@ -252,6 +252,12 @@ const CONFIG = {
     fxc.globalCompositeOperation="lighter";
     for(let i=sparks.length-1;i>=0;i--){const p=sparks[i];p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.life-=p.decay;if(p.life<=0){sparks.splice(i,1);continue;}
       fxc.beginPath();fxc.arc(p.x,p.y,p.size,0,7);fxc.fillStyle=`rgba(255,${200+(Math.random()*40|0)},120,${p.life})`;fxc.shadowBlur=10;fxc.shadowColor="rgba(232,184,75,.8)";fxc.fill();}
+    // react-bits Click Spark — radiating lines on click
+    for(let i=clicks.length-1;i>=0;i--){const c=clicks[i];c.life-=.05;if(c.life<=0){clicks.splice(i,1);continue;}
+      const ease=1-c.life,inner=6+ease*22,outer=inner+13*c.life;
+      fxc.strokeStyle=`rgba(247,214,122,${c.life})`;fxc.lineWidth=2;fxc.shadowBlur=8;fxc.shadowColor="rgba(232,184,75,.9)";
+      for(let k=0;k<c.n;k++){const a=(k/c.n)*Math.PI*2+c.rot;fxc.beginPath();
+        fxc.moveTo(c.x+Math.cos(a)*inner,c.y+Math.sin(a)*inner);fxc.lineTo(c.x+Math.cos(a)*outer,c.y+Math.sin(a)*outer);fxc.stroke();}}
     fxc.globalCompositeOperation="source-over";fxc.shadowBlur=0;})();
   let actx;
   function playRoar(){if(reduced)return;try{actx=actx||new(AudioContext||webkitAudioContext)();const t=actx.currentTime;
@@ -263,6 +269,18 @@ const CONFIG = {
   const lion=$("#lion");
   lion.addEventListener("click",roar);
   lion.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();roar();}});
+
+  // react-bits Click Spark trigger
+  if(!reduced) addEventListener("pointerdown",e=>{clicks.push({x:e.clientX,y:e.clientY,life:1,n:8,rot:Math.random()*Math.PI});});
+
+  // react-bits Magnet — buttons lean toward the cursor
+  if(!isTouch&&!reduced){
+    $$(".btn,.nav-cta").forEach(el=>{
+      el.addEventListener("mousemove",e=>{const r=el.getBoundingClientRect();
+        el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.3}px,${(e.clientY-r.top-r.height/2)*.5}px)`;});
+      el.addEventListener("mouseleave",()=>{el.style.transform="";});
+    });
+  }
 
   /* ============ LIQUID-GLASS POINTER SHEEN ============ */
   if(!isTouch){
