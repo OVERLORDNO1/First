@@ -21,10 +21,11 @@
     <filter id="liquid">
       <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="7" result="n"/>
       <feGaussianBlur in="n" stdDeviation="1.4" result="nb"/>
-      <feDisplacementMap in="SourceGraphic" in2="nb" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="9" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </svg>
 
+  <div class="scroll-progress" id="prog" aria-hidden="true"></div>
   <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
   <canvas id="webgl"></canvas>
   <div class="float-gallery" id="floatGallery" aria-hidden="true"></div>
@@ -123,6 +124,15 @@
         </div>
       </div>
       <div class="story-watermark" id="storyMark">🦁</div>
+    </section>
+
+    <!-- STATEMENT (pinned scroll) -->
+    <section class="statement" id="statement">
+      <div class="stmt-inner">
+        <div class="stmt-lion" id="stmtLion">🦁</div>
+        <h2 class="stmt-text"><span>LONG</span><span>LIVE</span><span>THE</span><span class="q">QUEEN</span></h2>
+        <p class="stmt-sub">hear her roar</p>
+      </div>
     </section>
 
     <!-- JOURNEY -->

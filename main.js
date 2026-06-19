@@ -302,8 +302,12 @@ const CONFIG = {
   }
 
   /* ============ NAV ============ */
-  const nav=$("#nav"),burger=$("#burger");
-  addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>40),{passive:true});
+  const nav=$("#nav"),burger=$("#burger"),prog=$("#prog");
+  addEventListener("scroll",()=>{
+    nav.classList.toggle("scrolled",scrollY>40);
+    const h=document.documentElement.scrollHeight-innerHeight;
+    if(prog) prog.style.transform=`scaleX(${h>0?Math.min(scrollY/h,1):0})`;
+  },{passive:true});
   burger.addEventListener("click",()=>nav.classList.toggle("open"));
   $$("#navLinks a").forEach(a=>a.addEventListener("click",()=>nav.classList.remove("open")));
 
@@ -361,6 +365,18 @@ const CONFIG = {
 
   function initScroll(){
     if(!window.gsap||!window.ScrollTrigger||reduced) return;
+    // hero parallax (scroll-scrubbed)
+    const heroPx={trigger:".hero",start:"top top",end:"bottom top",scrub:true};
+    gsap.to(".sigil-stage",{yPercent:55,opacity:.25,ease:"none",scrollTrigger:heroPx});
+    gsap.to(".hero-title",{yPercent:90,ease:"none",scrollTrigger:heroPx});
+    gsap.to(".hero-cta",{yPercent:140,opacity:0,ease:"none",scrollTrigger:heroPx});
+    gsap.to(".hero-eyebrow",{yPercent:-60,opacity:0,ease:"none",scrollTrigger:heroPx});
+    // pinned statement
+    gsap.timeline({scrollTrigger:{trigger:"#statement",start:"top top",end:"+=120%",scrub:1,pin:true}})
+      .from(".stmt-lion",{scale:.4,opacity:0,duration:1,ease:"power2.out"})
+      .from(".stmt-text span",{yPercent:120,opacity:0,stagger:.15,duration:1,ease:"power3.out"},"-=.4")
+      .from(".stmt-sub",{opacity:0,letterSpacing:"0.1em",duration:.6},"-=.2")
+      .to(".stmt-lion",{scale:1.15,ease:"none",duration:2},0);
     $$(".section-head").forEach(h=>gsap.from(h,{yPercent:16,opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:h,start:"top 86%"}}));
     $$(".section-eyebrow,.muted,.story-body p,.bundle-note,.badge").forEach(el=>gsap.from(el,{opacity:0,y:22,duration:.85,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 90%"}}));
     // stat cards with clip reveal
