@@ -1,60 +1,92 @@
+---
+title: Jarvis
+emoji: 🤖
+colorFrom: indigo
+colorTo: purple
+sdk: gradio
+app_file: app.py
+pinned: false
+---
+
 # Jarvis
 
-A simple personal AI assistant with a real brain — think a tiny, terminal
-version of Tony Stark's Jarvis. It runs on the Claude API, streams its replies,
-remembers your conversation while it's running, and keeps a long-term memory
-file on disk so it slowly learns about you.
+A simple personal AI assistant with a real brain — a tiny, personal version of
+Tony Stark's Jarvis. It runs on the Claude API, streams its replies, and keeps a
+long-term memory file so it slowly learns about you.
 
-## What it does
+It comes in two flavours that share the same brain and memory:
 
-- **Chats** with you in the terminal, streaming replies token by token.
-- **Has a brain** — powered by Claude Opus 4.8 (configurable).
-- **Remembers you** — a `memory.md` file holds durable facts about you. Jarvis
-  writes to it on its own (via a `remember` tool) and you can edit it by hand.
-- **Keeps a log** — every conversation is saved to `jarvis_log.md`.
+- **`jarvis.py`** — a terminal chat (run it in a console).
+- **`app.py`** — a **web interface** you open in a browser. This is the one you
+  deploy to a free host so you can use Jarvis **now and from home, on any device.**
 
-## Setup
+## Use it now (free, from your phone or any browser)
 
-You need an Anthropic API key and Python 3.9+.
+The web version is built to run on a **free Hugging Face Space**:
+
+1. Create a free account at <https://huggingface.co>.
+2. Click **New → Space**. Choose **SDK: Gradio**, give it a name.
+3. Upload these files (or connect this GitHub repo): `app.py`, `jarvis.py`,
+   `requirements.txt`, `memory.md`, and this `README.md`.
+4. In the Space, go to **Settings → Secrets** and add a secret named
+   `ANTHROPIC_API_KEY` with your Anthropic key.
+5. The Space builds itself and gives you a public URL. Open it on your phone or
+   laptop — that's your Jarvis, reachable anywhere.
+
+The little YAML block at the very top of this file is what tells Hugging Face to
+run it as a Gradio app — leave it there.
+
+> Other free options that work the same way: **Render**, **Railway**, or
+> **Streamlit Community Cloud**. Hugging Face Spaces is the easiest because the
+> chat UI and the public URL come for free.
+
+## Use it at home
+
+Exactly the same code runs on your own machine or a Raspberry Pi:
 
 ```bash
-# 1. Install the one dependency
 pip install -r requirements.txt
-
-# 2. Set your API key
 export ANTHROPIC_API_KEY=sk-ant-...
 
-# 3. Run it
-python jarvis.py
+python app.py      # web UI at http://localhost:7860
+# or
+python jarvis.py   # terminal chat
 ```
 
-Type `exit` (or Ctrl-D) to quit.
+## How the memory works
+
+`memory.md` holds durable facts about you. Jarvis loads it into its prompt every
+turn, so it always "knows" what's there. When it learns something lasting (your
+name, a preference, a project) it calls its `remember` tool and appends a dated
+line to `memory.md`. You can also edit the file by hand.
+
+> Note: on a free cloud Space the filesystem resets on rebuilds, so long-term
+> memory survives a session but not a redeploy. For permanent memory, run it at
+> home, or point `JARVIS_MEMORY` at a synced location (e.g. your Obsidian vault).
 
 ## Configuration
-
-Set these environment variables to tweak behaviour:
 
 | Variable            | Default            | What it does                              |
 | ------------------- | ------------------ | ----------------------------------------- |
 | `ANTHROPIC_API_KEY` | —                  | Your Anthropic API key (required)         |
-| `JARVIS_MODEL`      | `claude-opus-4-8`  | The model. Use `claude-sonnet-4-6` or `claude-haiku-4-5` for cheaper/faster. |
+| `JARVIS_MODEL`      | `claude-opus-4-8`  | Model. `claude-sonnet-4-6` / `claude-haiku-4-5` for cheaper/faster. |
 | `JARVIS_MEMORY`     | `memory.md`        | Path to the long-term memory file.        |
 
-## How the memory works
+## How this relates to OpenJarvis
 
-Jarvis loads `memory.md` into its system prompt at the start of every reply, so
-it always "knows" what's in there. When it learns something durable about you
-(your name, a preference, a project), it calls its `remember` tool, which
-appends a dated bullet to `memory.md`.
+[OpenJarvis](https://github.com/open-jarvis/OpenJarvis) is a separate, larger
+project that runs **local models on your own hardware** (via Ollama). It's a
+great **private, at-home** option for later — install it on your PC or Pi and run
+its `jarvis` command. But it needs real local compute, so it can't be hosted on a
+free cloud space for "use it now from anywhere."
 
-You'll see a quiet `· remembered: ...` note when this happens.
+This project takes the other route: the heavy thinking runs on Anthropic's
+servers, so the app itself is tiny and **fits free hosting with a built-in chat
+UI** — which is exactly what gets you a Jarvis you can use now *and* at home.
 
 ## Where this is going
 
-- **Obsidian** — point `JARVIS_MEMORY` at a notes file in your vault, or extend
-  Jarvis to read multiple notes, and it gains a much richer picture of you.
-- **Raspberry Pi / always-on** — it's a single Python file with one dependency,
-  so it'll happily run on a Pi. Drop `JARVIS_MODEL` to a smaller model to keep
-  costs down for an always-on assistant.
-- **Voice** — add speech-to-text and text-to-speech around the chat loop to talk
-  to it out loud.
+- **Obsidian** — point `JARVIS_MEMORY` at a note in your vault for richer memory.
+- **Raspberry Pi** — single app, light footprint; drop to a smaller model to keep
+  an always-on assistant cheap.
+- **Voice** — wrap speech-to-text / text-to-speech around the chat loop.
