@@ -46,12 +46,28 @@ Exactly the same code runs on your own machine or a Raspberry Pi:
 
 ```bash
 pip install -r requirements.txt
+
+# Either export your key:
 export ANTHROPIC_API_KEY=sk-ant-...
+# ...or copy .env.example to .env and put your key there (loaded automatically):
+cp .env.example .env
 
 python app.py      # web UI at http://localhost:7860
 # or
 python jarvis.py   # terminal chat
 ```
+
+### Terminal commands
+
+In the terminal version (`jarvis.py`), a few slash-commands are available:
+
+| Command    | What it does                                  |
+| ---------- | --------------------------------------------- |
+| `/help`    | List commands                                 |
+| `/memory`  | Show everything Jarvis remembers about you    |
+| `/forget`  | Forget the most recent thing it learned       |
+| `/clear`   | Clear the current conversation (keeps memory) |
+| `exit`     | Quit                                          |
 
 ## How the memory works
 

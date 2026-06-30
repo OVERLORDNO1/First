@@ -20,6 +20,13 @@ import os
 import gradio as gr
 import anthropic
 
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
+
 # Reuse the exact same brain + memory as the terminal version.
 from jarvis import (
     MODEL,

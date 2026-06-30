@@ -18,6 +18,15 @@ from pathlib import Path
 
 import anthropic
 
+# Load ANTHROPIC_API_KEY and JARVIS_* settings from a local .env file if present,
+# so you don't have to export them every time. Optional dependency.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
+
 # --- Configuration -----------------------------------------------------------
 
 # The brain. Opus 4.8 is the most capable. If you move this to a Raspberry Pi
@@ -94,6 +103,19 @@ def append_memory(fact: str) -> None:
     line = f"- ({stamp}) {fact.strip()}\n"
     with MEMORY_FILE.open("a", encoding="utf-8") as f:
         f.write(line)
+
+
+def forget_last_memory():
+    """Remove the most recently remembered fact. Returns the removed text or None."""
+    if not MEMORY_FILE.exists():
+        return None
+    lines = MEMORY_FILE.read_text(encoding="utf-8").splitlines()
+    for i in range(len(lines) - 1, -1, -1):
+        if lines[i].lstrip().startswith("- "):
+            removed = lines.pop(i)
+            MEMORY_FILE.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            return removed.lstrip()[2:]
+    return None
 
 
 def log(role: str, text: str) -> None:
@@ -173,7 +195,10 @@ def main() -> None:
     memory_text = load_memory()
     messages = []
 
-    print("\033[1mJarvis\033[0m online. (type 'exit' to quit)\n")
+    print(
+        "\033[1mJarvis\033[0m online. "
+        "(type 'exit' to quit, '/help' for commands)\n"
+    )
 
     while True:
         try:
@@ -187,6 +212,30 @@ def main() -> None:
         if user_input.lower() in {"exit", "quit", "bye"}:
             print("Goodbye.")
             break
+
+        # In-chat commands (don't go to Claude).
+        if user_input.startswith("/"):
+            cmd = user_input[1:].strip().lower()
+            if cmd in {"help", "?", ""}:
+                print(
+                    "  /help      show this help\n"
+                    "  /memory    show what Jarvis remembers about you\n"
+                    "  /forget    forget the most recent thing it learned\n"
+                    "  /clear     clear this conversation (keeps memory)\n"
+                    "  exit       quit"
+                )
+            elif cmd == "memory":
+                print(load_memory().strip() or "  (nothing remembered yet)")
+            elif cmd == "forget":
+                removed = forget_last_memory()
+                memory_text = load_memory()
+                print(f"  forgot: {removed}" if removed else "  (nothing to forget)")
+            elif cmd == "clear":
+                messages.clear()
+                print("  (conversation cleared)")
+            else:
+                print(f"  unknown command: /{cmd} — try /help")
+            continue
 
         messages.append({"role": "user", "content": user_input})
         log("you", user_input)
