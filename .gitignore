@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Jarvis runtime files
+jarvis_log.md
+
+# Secrets — never commit your API key
+.env
