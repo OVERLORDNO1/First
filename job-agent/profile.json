@@ -1,44 +1,150 @@
 {
-  "_comment": "TODO: replace all placeholder values below using your uploaded CV PDF.",
   "contact": {
-    "full_name": "",
+    "full_name": "Hesam (Ryan) Abdollahi",
     "email": "hesam.abdollahii92@gmail.com",
-    "phone": "",
-    "location": "",
+    "phone": "+44 7729 133329",
+    "location": "Ipswich, United Kingdom",
     "linkedin_url": "",
     "portfolio_or_website": ""
   },
-  "headline": "",
-  "summary": "",
-  "skills": [],
+  "headline": "Senior Vessel Planner - Ship Planning, Stowage & Alliance Coordination",
+  "summary": "Senior vessel planner with a seagoing deck-officer background, equally at home with what a service needs commercially and what the ship can safely execute. Reads every plan from the vessel's side first - how it lands on the master, the chief officer, the terminal and the live operation - and checks the full picture (intake, allocation, stability and stress, DG and special cargo) before committing rather than only chasing space. Calm and decisive under planning pressure, multilingual, confident working with masters, chief officers, port captains, terminals, agents, commercial teams and partner lines, and ready to step up into wider ship planning, service coordination and alliance operations across Europe and head-office teams.",
+  "skills": [
+    "Per-port allocation & intake planning",
+    "TEU/MT utilisation, 20ft/40ft mix, stack weights",
+    "Bay/tier stowage planning, load and discharge sequencing",
+    "ULCV and varied vessel-size stowage",
+    "Stability & stress: GM/GOM, trim vs consumption, shear force, torsion, free-surface effect",
+    "DG/IMDG, OOG/BBK, reefer, ISO tank and heavy/high-value cargo planning",
+    "Restow management, COD requests, multi-POD calls, phase-in/phase-out",
+    "Bunker-party oversight and LNG monitoring",
+    "Stakeholder coordination: masters, chief officers, port captains, terminals, agents, commercial teams",
+    "Advanced Excel (formula-driven automation)",
+    "QlikView",
+    "SQL (basic)",
+    "Bridge resource management and navigational watchkeeping",
+    "Multilingual: English, Persian/Farsi (native), Turkish, Italian, Arabic, Mandarin (learning)"
+  ],
   "work_history": [
     {
-      "company": "",
-      "title": "",
-      "location": "",
-      "start_date": "",
-      "end_date": "",
-      "highlights": []
+      "company": "MSC (Mediterranean Shipping Company)",
+      "title": "Senior Vessel Planner",
+      "location": "United Kingdom",
+      "start_date": "2023",
+      "end_date": "Present",
+      "highlights": [
+        "Build, review and adjust container vessel stowage plans for international liner services, balancing vessel safety, commercial priority, terminal execution and schedule reliability.",
+        "Set precise per-port allocation from provisional bookings through a self-built, formula-driven Excel system, now adopted as the standard intake and allocation reference across the North America services.",
+        "Review intake, TEU/MT utilisation, 20ft/40ft mix, stack weights and bay/tier restrictions before committing each plan.",
+        "Plan DG/IMDG, OOG and breakbulk, heavy 20s, reefers, ISO tanks and empties to full segregation, access and safety requirements.",
+        "Apply stability and stress judgement across GM/GOM, trim, shear force, torsion, free-surface effect and lashing limits, advising masters on required adjustments.",
+        "Manage restows, COD requests, multi-POD calls, partner-allocation issues and phase-in/phase-out constraints on long-haul services spanning the Middle East, Indian Subcontinent, Colombo, North America and Mexico.",
+        "Oversee bunker-party operations with active monitoring, notably on LNG vessels, keeping the safety zone clear of DG and reefer units.",
+        "Guide colleagues on intake checks, port restrictions, vessel definitions, cargo segregation and restow exposure."
+      ]
+    },
+    {
+      "company": "University of Reading, UK & American College of Greece",
+      "title": "Relocation to the UK & Postgraduate Study",
+      "location": "United Kingdom / Greece",
+      "start_date": "2019",
+      "end_date": "2023",
+      "highlights": [
+        "Relocated to the United Kingdom and completed a dual-award MSc in International Shipping & Finance (180 credits)."
+      ]
+    },
+    {
+      "company": "Islamic Republic of Iran Shipping Lines (IRISL)",
+      "title": "Senior Navigation Officer & Training Officer",
+      "location": "Iran / Seagoing",
+      "start_date": "2015",
+      "end_date": "2018",
+      "highlights": [
+        "Served at sea in a senior deck capacity: vessel operations, bridge resource management, cargo operations and shipboard safety culture.",
+        "Ran navigational watchkeeping, passage planning, berthing/unberthing support and voyage records to international maritime standards.",
+        "Led safety and emergency drills and trained multinational deck cadets."
+      ]
+    },
+    {
+      "company": "Ariyanpoor Holding",
+      "title": "Project Assistant & Financial Analyst",
+      "location": "Iran",
+      "start_date": "2018",
+      "end_date": "2019",
+      "highlights": [
+        "Milestone tracking, stakeholder coordination and operational/financial reporting; coordinated a team of 10."
+      ]
+    },
+    {
+      "company": "Bushehr Customs Authority",
+      "title": "Customs Coordinator",
+      "location": "Iran",
+      "start_date": "2017",
+      "end_date": "2018",
+      "highlights": [
+        "Import/export documentation, clearance and inspection coordination; depot and HGV gate-control liaison."
+      ]
+    },
+    {
+      "company": "Arad Freight Forwarding & Logistics",
+      "title": "Logistics Coordinator",
+      "location": "Iran",
+      "start_date": "2016",
+      "end_date": "2017",
+      "highlights": [
+        "Road and sea shipment coordination, carrier assignment and delivery tracking; subcontractor negotiation on cost and reliability."
+      ]
     }
   ],
   "education": [
     {
-      "institution": "",
-      "degree": "",
-      "field": "",
+      "institution": "University of Reading (UK) & American College of Greece",
+      "degree": "MSc International Shipping & Finance, Dual Award, 180 Credits",
+      "field": "International Shipping & Finance",
+      "start_date": "2019",
+      "end_date": "2023"
+    },
+    {
+      "institution": "Azad University of Kharg, Iran",
+      "degree": "BSc Maritime Navigation Engineering, Full Academic Scholarship (IRISL)",
+      "field": "Maritime Navigation Engineering",
+      "start_date": "",
+      "end_date": ""
+    },
+    {
+      "institution": "Vancouver International College, Canada",
+      "degree": "TESOL Certificate",
+      "field": "TESOL",
       "start_date": "",
       "end_date": ""
     }
   ],
-  "certifications": [],
-  "languages": [],
-  "work_authorization": "",
+  "certifications": [
+    "GMDSS/GOC",
+    "ECDIS",
+    "Radar/ARPA",
+    "Advanced Firefighting",
+    "Survival Craft & Rescue Boat",
+    "Medical First Aid",
+    "ISPS / Port Security",
+    "Seafarer Security Duties",
+    "Certified Personal Trainer (NASM L2 & L3)"
+  ],
+  "languages": [
+    "English (professional working)",
+    "Persian/Farsi (native)",
+    "Turkish (conversational)",
+    "Italian (reading/listening)",
+    "Arabic (reading/listening)",
+    "Mandarin (currently learning)"
+  ],
+  "work_authorization": "Skilled Worker visa holder (UK)",
   "salary_expectation": "",
   "notice_period": "",
   "common_application_answers": {
-    "why_this_company_template": "",
+    "why_this_company_template": "Reference the company's specific trade lanes, fleet, or planning challenges mentioned in the posting - connect to MSC vessel planning, alliance/service coordination, or stability & special-cargo experience as relevant.",
     "willing_to_relocate": "",
     "willing_to_travel": "",
-    "years_of_experience": ""
+    "years_of_experience": "Seagoing deck officer 2015-2018; vessel/ship planning since 2023 (plus 2018-2019 shore-based logistics/customs/finance roles)"
   }
 }

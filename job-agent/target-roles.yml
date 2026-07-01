@@ -1,15 +1,30 @@
 # What to search for. Edit these before running the job-apply skill.
 
 titles:
-  - ""        # e.g. "Software Engineer", "Product Manager"
+  - "Vessel Planner"
+  - "Senior Vessel Planner"
+  - "Ship Planner"
+  - "Stowage Planner"
+  - "Ship Planning Coordinator"
+  - "Marine/Vessel Operations Planner"
+  - "Liner Trade/Service Coordinator"
+  - "Alliance/Network Planner"
 
 seniority:
-  - ""        # e.g. "Mid", "Senior"
+  - "Senior"
+  - "Mid-Senior"
 
 locations:
-  - ""        # e.g. "Remote", "London, UK"
+  - "United Kingdom"
+  - "Remote"
+  - "Europe"
 
-must_have_keywords: []   # postings must contain at least one of these
+must_have_keywords:
+  - "stowage"
+  - "vessel planning"
+  - "ship planning"
+  - "liner"
+  - "container"
 exclude_keywords: []     # skip postings containing any of these
 
 employment_types:
