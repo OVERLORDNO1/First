@@ -5,13 +5,46 @@ posting, fills out applications, and tracks everything in one log.
 
 ## Important: where this has to run
 
-This project must run with **Claude Code CLI on your own computer**, logged
-into your own browser session, with the Playwright MCP server installed.
-Cloud/remote Claude Code sessions (like claude.ai/code containers) have no
-browser and no access to your LinkedIn login, so the automation steps below
-will not work there — only the research/tailoring steps will.
+This project needs a persistent machine with a real, logged-in browser —
+Claude Code sessions triggered from GitHub issues/PRs (like the one that
+built this scaffold) run in throwaway cloud containers with no browser, so
+they can maintain these files but can't drive LinkedIn. You need either your
+own computer, or a persistent virtual machine/dev environment. If you don't
+have your own machine free right now, the fastest free option is a **GitHub
+Codespace on this repo** — see below.
 
-Setup on your machine:
+### Option A: GitHub Codespaces (free, no setup on your own machine)
+
+This repo includes a `.devcontainer/devcontainer.json` at the repo root that
+does the setup for you.
+
+1. On github.com, go to this repo, switch to the
+   `claude/automated-job-applications-x2yjwa` branch, click **Code → Codespaces
+   → Create codespace on branch**.
+2. Wait for it to build — it installs Claude Code CLI, Playwright + Chromium,
+   registers the Playwright MCP server, and a lightweight virtual desktop
+   (noVNC) automatically.
+3. Once it's ready, open the **Ports** tab, find port `6080` ("Virtual
+   desktop"), click the globe icon to open it in a browser tab, and enter the
+   password from `devcontainer.json` (`changeme123` by default — change it
+   before you use this for real).
+4. Inside that virtual desktop, open a browser and log into linkedin.com
+   once, manually, with your real credentials. Playwright MCP's browser
+   profile persists on the Codespace's disk after that, so you won't need to
+   log in again unless the Codespace is deleted/rebuilt.
+5. In the Codespace's terminal (VS Code's integrated terminal, not the
+   desktop), run `claude`, `cd job-agent`, and ask it to run the job-apply
+   skill.
+6. Free tier: personal GitHub accounts get 60 hours/month of 2-core Codespace
+   usage (120 core-hours) at no cost, and it auto-stops after ~30 minutes
+   idle so you don't burn hours by accident. Fine to start with; if you use
+   this daily you may want to move to a paid tier or your own machine later.
+
+Codespaces persist between stop/start, but **deleting or rebuilding the
+Codespace wipes the browser profile** — you'd need to log into LinkedIn
+again.
+
+### Option B: your own computer
 
 ```bash
 claude mcp add playwright npx @playwright/mcp@latest

@@ -4,7 +4,7 @@
     "email": "hesam.abdollahii92@gmail.com",
     "phone": "+44 7729 133329",
     "location": "Ipswich, United Kingdom",
-    "linkedin_url": "",
+    "linkedin_url": "https://www.linkedin.com/in/ryanry",
     "portfolio_or_website": ""
   },
   "headline": "Senior Vessel Planner - Ship Planning, Stowage & Alliance Coordination",
@@ -139,12 +139,15 @@
     "Mandarin (currently learning)"
   ],
   "work_authorization": "Skilled Worker visa holder (UK)",
-  "salary_expectation": "",
+  "salary_expectation": "GBP 68,000+ gross/year (targeting ~GBP 50,000 take-home after UK tax/NI - approximate, standard tax code, no pension or student-loan deductions assumed; confirm against a net-pay calculator for an exact figure before quoting it to an employer)",
   "notice_period": "",
   "common_application_answers": {
     "why_this_company_template": "Reference the company's specific trade lanes, fleet, or planning challenges mentioned in the posting - connect to MSC vessel planning, alliance/service coordination, or stability & special-cargo experience as relevant.",
-    "willing_to_relocate": "",
+    "willing_to_relocate": "Yes, open to relocation within the UK/Europe for the right role.",
     "willing_to_travel": "",
     "years_of_experience": "Seagoing deck officer 2015-2018; vessel/ship planning since 2023 (plus 2018-2019 shore-based logistics/customs/finance roles)"
+  },
+  "workplace_requirements": {
+    "parking": "Requires on-site/free parking at the workplace - deprioritize or flag roles where parking is explicitly unavailable or paid-only with no allowance."
   }
 }

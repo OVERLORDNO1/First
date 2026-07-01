@@ -1,0 +1,17 @@
+{
+  "name": "job-agent",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20",
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "password": "changeme123"
+    }
+  },
+  "forwardPorts": [6080],
+  "portsAttributes": {
+    "6080": {
+      "label": "Virtual desktop (noVNC) - log into LinkedIn here once",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "npm install -g @anthropic-ai/claude-code && npx --yes playwright install --with-deps chromium && claude mcp add playwright npx @playwright/mcp@latest || true"
+}

@@ -44,6 +44,15 @@ and ask the user to fill them in first — do not invent a work history.
    skills/experience and `must_have_keywords`. Drop anything below
    `minimum_match_score`. Log dropped postings with status `skipped_low_match`
    or `skipped_blacklist`.
+   - Check the posting/company details for `profile.json.workplace_requirements`
+     (e.g. on-site parking). If a posting explicitly rules one out, lower its
+     score or skip it, and note the reason in the log; if the posting doesn't
+     mention it either way, don't penalize it — just flag it as "parking:
+     unknown, confirm at interview" in notes.
+   - Treat `salary_expectation` as a floor: if a posting states a salary range
+     clearly below it, skip with status `skipped_low_salary`; if the posting
+     gives no range, proceed and let `common_application_answers` supply the
+     figure if asked.
 
 4. **Tailor.** For each posting that passes:
    - Write a one-page tailored CV variant (reorder/emphasize existing
