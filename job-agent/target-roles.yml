@@ -16,8 +16,7 @@ seniority:
 
 locations:
   - "United Kingdom"
-  - "Remote"
-  - "Europe"
+  - "Remote (UK-based)"
 
 must_have_keywords:
   - "stowage"
