@@ -1,0 +1,8 @@
+# Companies, recruiters, or domains to always skip.
+# One entry per line. Case-insensitive substring match.
+
+companies: []
+
+# Skip postings from these recruiting agencies/domains too, if you don't want
+# third-party recruiter reposts.
+agencies: []

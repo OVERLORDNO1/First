@@ -1,0 +1,26 @@
+# What to search for. Edit these before running the job-apply skill.
+
+titles:
+  - ""        # e.g. "Software Engineer", "Product Manager"
+
+seniority:
+  - ""        # e.g. "Mid", "Senior"
+
+locations:
+  - ""        # e.g. "Remote", "London, UK"
+
+must_have_keywords: []   # postings must contain at least one of these
+exclude_keywords: []     # skip postings containing any of these
+
+employment_types:
+  - full_time
+
+daily_application_cap: 15
+
+# Minimum match score (0-100) for the skill to bother tailoring + applying.
+# Raise this if you get too many low-quality matches, lower it if too few.
+minimum_match_score: 70
+
+sources:
+  linkedin: true
+  company_ats_boards: true   # Greenhouse / Lever / Ashby / Workday / direct sites

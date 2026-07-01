@@ -1,0 +1,44 @@
+{
+  "_comment": "TODO: replace all placeholder values below using your uploaded CV PDF.",
+  "contact": {
+    "full_name": "",
+    "email": "hesam.abdollahii92@gmail.com",
+    "phone": "",
+    "location": "",
+    "linkedin_url": "",
+    "portfolio_or_website": ""
+  },
+  "headline": "",
+  "summary": "",
+  "skills": [],
+  "work_history": [
+    {
+      "company": "",
+      "title": "",
+      "location": "",
+      "start_date": "",
+      "end_date": "",
+      "highlights": []
+    }
+  ],
+  "education": [
+    {
+      "institution": "",
+      "degree": "",
+      "field": "",
+      "start_date": "",
+      "end_date": ""
+    }
+  ],
+  "certifications": [],
+  "languages": [],
+  "work_authorization": "",
+  "salary_expectation": "",
+  "notice_period": "",
+  "common_application_answers": {
+    "why_this_company_template": "",
+    "willing_to_relocate": "",
+    "willing_to_travel": "",
+    "years_of_experience": ""
+  }
+}
