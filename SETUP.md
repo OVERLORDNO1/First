@@ -1,76 +1,74 @@
-# 📱 Setup Guide (phone-friendly, no coding needed)
+# 📱 Setup Guide — the FREE path (semi-auto, ~$0/month)
 
-You'll set up 4 free/cheap accounts, paste their keys into GitHub once, and then the
-agent runs itself. Total time: ~30–40 minutes. Total cost: **under $20/month**.
+The agent writes the story, records the voiceover, pulls cinematic footage, and builds a
+finished vertical video **with captions burned in**. Then it hands you a **post-pack** — the
+video plus copy-paste captions for each platform. You post it in ~2 minutes from your phone.
 
-Do these in order. You can do all of it from your iPhone.
+No scheduler fees. No platform app-review pain. Total cost: **basically $0** (free tiers).
 
----
-
-## Step 1 — The scheduler (this is what posts to every platform)
-This is the one piece that connects TikTok + Instagram + YouTube + Facebook.
-
-**Pick ONE:**
-- **Postiz** (open-source, cheapest) → sign up at postiz.com, or self-host for free.
-- **Blotato** (~$9/mo, easiest) → blotato.com. Built for exactly this.
-
-Inside the dashboard: **connect your TikTok, Instagram, YouTube, and Facebook accounts**
-(tap "add channel" for each and log in). Then find **Settings → API / Public API** and copy your **API key**.
-
-> ⚠️ Instagram & TikTok require a **Business/Creator** account to auto-post. In each app:
-> Settings → switch to Professional/Business account (free). Do this first.
+You'll set up **3 free accounts**, paste **3 keys** into GitHub once, and you're done.
+All of this works from your iPhone.
 
 ---
 
-## Step 2 — Voiceover (ElevenLabs)
-- Sign up at elevenlabs.io (free tier works to start).
-- Pick a **calm, warm voice** you like → copy its **Voice ID**.
+## Step 1 — The writer (Anthropic)
+- Get an API key at **console.anthropic.com → API keys**.
+- Add ~$5 credit. Each script costs about **a penny**, so $5 lasts months.
+- Copy the key.
+
+## Step 2 — The voiceover (ElevenLabs — free tier)
+- Sign up at **elevenlabs.io**.
+- Pick a **calm, warm voice** → copy its **Voice ID**.
 - Profile → **API key** → copy it.
 
----
-
-## Step 3 — B-roll (Pexels — free forever)
-- Sign up at pexels.com → **Image & Video API** → copy your **API key**.
+## Step 3 — The footage (Pexels — free forever)
+- Sign up at **pexels.com** → **Image & Video API** → copy your **API key**.
 
 ---
 
-## Step 4 — The writer (Anthropic)
-- Get an API key at console.anthropic.com → **API keys**.
-- Add ~$5 credit. (Scripts cost pennies each.)
-
----
-
-## Step 5 — Paste the keys into GitHub (one time)
-On the GitHub app or website, open this repo →
+## Step 4 — Paste the keys into GitHub (one time)
+On the GitHub app or website: open this repo →
 **Settings → Secrets and variables → Actions → New repository secret.**
-Add these four (names must match exactly):
+Add these three (names must match exactly):
 
-| Secret name | Paste the key from |
+| Secret name | From |
 |---|---|
-| `ANTHROPIC_API_KEY` | Step 4 |
+| `ANTHROPIC_API_KEY` | Step 1 |
 | `ELEVENLABS_API_KEY` | Step 2 |
 | `PEXELS_API_KEY` | Step 3 |
-| `POSTIZ_API_KEY` | Step 1 |
 
-Also edit **`agent/config.example.json`** → copy it to **`agent/config.json`**, and fill in
-your `voice_id` (Step 2) and scheduler `base_url` (Step 1). *(config.json is gitignored — safe.)*
-
----
-
-## Step 6 — Test it (no posting yet)
-In the GitHub app: **Actions → Story Engine → Run workflow → set "dry_run" = true → Run.**
-It writes a script + captions and saves them (download the artifact to read them). No video, no posting.
-Love the writing? Move on.
-
-## Step 7 — Go live
-Run the workflow again with **dry_run = false**. It builds the video and posts everywhere.
-After that, the schedule in `.github/workflows/story-engine.yml` runs it automatically ~4×/week.
-You do nothing. 🎉
+Then copy **`agent/config.example.json`** to **`agent/config.json`** and fill in your
+`voice_id` (Step 2). Leave the scheduler as `"provider": "manual"`. *(config.json is gitignored — safe.)*
 
 ---
 
-## Changing things later (just ask the agent)
-- New page name / voice → edit `brand/brand.md`.
-- Post more/less often → edit the `cron` lines in the workflow.
-- Different vibe → edit `strategy/story-templates.md`.
-- Just tell Claude: *"change the posting schedule to daily at 6pm"* and it'll do it.
+## Step 5 — Make your first video
+In the GitHub app: **Actions → Story Engine → Run workflow.**
+When it finishes (~2–3 min), tap the run → **download the "content" artifact**. Inside you'll find:
+- `final.mp4` — your finished video
+- `POST_PACK.txt` — the caption for each platform, ready to paste
+
+## Step 6 — Post it (the 2-minute routine)
+Save `final.mp4` to your phone, then for each app:
+**TikTok → Instagram Reels → YouTube Shorts → Facebook** — upload the video, paste that
+platform's caption from `POST_PACK.txt`, post. Done.
+
+> 💡 Want to post to all four in fewer taps? Connect them once in a **free** app like
+> **Buffer** or **Metricool** (free tiers) and upload there instead of app-by-app.
+
+## Step 7 — Let it run on autopilot (the *creating* part)
+The schedule in `.github/workflows/story-engine.yml` already makes a fresh video ~4×/week
+automatically. You just grab each one and post it. Zero writing, zero editing on your side.
+
+---
+
+## Upgrading to fully-automatic later
+When the page is growing and you're ready to remove the manual step, switch the scheduler
+`provider` to `postiz` (self-host ~$5/mo) or `blotato` ($29/mo) — the posting code is already
+there. Just tell Claude *"set me up for full auto-posting"* and it'll walk you through it.
+
+## Changing things (just ask Claude on your phone)
+- New page name / voice → `brand/brand.md`
+- Post more/less often → the `cron` lines in the workflow
+- Different story vibe → `strategy/story-templates.md`
+- Or literally say: *"make the videos funnier"* / *"post daily at 6pm"* and it's done.

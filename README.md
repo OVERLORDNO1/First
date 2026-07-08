@@ -14,10 +14,11 @@ Built to run from your **iPhone** (Claude app) and on autopilot (free GitHub Act
 2. NARRATES it      →  emotional AI voiceover
 3. BUILDS the video →  cinematic stock B-roll + captions + music (faceless, high quality)
 4. WRITES captions  →  tuned per platform (TikTok / IG / YT / FB) + hashtags
-5. POSTS everywhere →  one push fans out to all platforms via a scheduler
+5. HANDS YOU a pack →  finished video + copy-paste captions; you post in ~2 min from your phone
 ```
 
-You approve nothing day-to-day once it's live — but you *can* review anything from your phone.
+Running the FREE semi-auto way: the agent creates everything on autopilot, you do the final
+post. Upgrade to full auto-posting anytime (see the end of SETUP.md).
 
 ---
 
@@ -30,9 +31,9 @@ You approve nothing day-to-day once it's live — but you *can* review anything 
 | Voiceover | ElevenLabs free tier / OpenAI TTS | ~$0–5/mo |
 | Cinematic B-roll | **Pexels** stock (free API) | **free** |
 | Video assembly | **ffmpeg** (runs in the free Action) | **free** |
-| Post to all platforms | **Postiz** (open-source) or **Blotato** | free–~$9/mo |
+| Posting | **you** (semi-auto) — or Buffer/Metricool free tier | **free** |
 
-**Total: ~$5–19/month.**
+**Total: ~$0–5/month** (just Anthropic script credits). Upgrade to full auto-posting later.
 
 ---
 

@@ -19,9 +19,8 @@
   },
 
   "scheduler": {
-    "provider": "postiz",
-    "base_url": "https://your-postiz-instance.com",
-    "api_key_env": "POSTIZ_API_KEY",
+    "_note": "provider 'manual' = FREE semi-auto: the agent builds the video + a copy-paste post-pack, you upload it yourself. Switch to 'postiz' later if you ever want full auto-posting.",
+    "provider": "manual",
     "platforms": ["tiktok", "instagram", "youtube", "facebook"]
   },
 

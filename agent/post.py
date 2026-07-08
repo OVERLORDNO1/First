@@ -20,7 +20,10 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def load(date_str: str):
     d = ROOT / "content" / date_str
-    cfg = json.loads((ROOT / "agent" / "config.json").read_text(encoding="utf-8"))
+    cfg_path = ROOT / "agent" / "config.json"
+    if not cfg_path.exists():
+        cfg_path = ROOT / "agent" / "config.example.json"
+    cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
     captions = json.loads((d / "captions.json").read_text(encoding="utf-8"))
     return cfg, captions, d / "final.mp4"
 
@@ -53,12 +56,41 @@ def post_postiz(cfg, captions, video: Path):
     print("🚀 posted to all connected platforms:", r.json().get("id", "ok"))
 
 
+def deliver_manual(captions, video: Path):
+    """
+    FREE semi-auto mode. No posting — just build a clean, copy-paste 'post-pack'
+    next to the video so you can post it yourself in ~2 minutes from your phone.
+    """
+    out = video.parent / "POST_PACK.txt"
+    L = ["🎬  YOUR VIDEO IS READY — post it in a couple of taps.",
+         f"Video file: {video.name}", "", "=" * 46, ""]
+
+    L += ["📱 TIKTOK",
+          captions["tiktok"]["caption"],
+          " ".join(captions["tiktok"]["hashtags"]), "", "-" * 46, ""]
+    L += ["📸 INSTAGRAM REELS",
+          captions["instagram"]["caption"],
+          " ".join(captions["instagram"]["hashtags"]), "", "-" * 46, ""]
+    L += ["▶️ YOUTUBE SHORTS",
+          "Title: " + captions["youtube"]["title"],
+          captions["youtube"]["description"],
+          " ".join(captions["youtube"]["hashtags"]), "", "-" * 46, ""]
+    L += ["👥 FACEBOOK",
+          captions["facebook"]["caption"], "", "=" * 46]
+
+    out.write_text("\n".join(L), encoding="utf-8")
+    print(f"✅ post-pack ready → {out}")
+    print("   Open POST_PACK.txt, then upload the video to each app with the caption.")
+
+
 def main(date_str: str):
     cfg, captions, video = load(date_str)
     if not video.exists():
         sys.exit(f"No video at {video} — run build_video.py first.")
     provider = cfg["scheduler"]["provider"]
-    if provider == "postiz":
+    if provider == "manual":
+        deliver_manual(captions, video)
+    elif provider == "postiz":
         post_postiz(cfg, captions, video)
     else:
         sys.exit(f"Add a post_{provider}() function for provider '{provider}'.")
