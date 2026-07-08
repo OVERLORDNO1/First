@@ -1,0 +1,53 @@
+name: Story Engine (autopilot)
+
+# Runs the whole agent on a schedule — this is your FREE automation engine.
+# Times are UTC. These fire Mon/Wed/Fri/Sun at 07:00 UTC (~4 videos/week).
+# Adjust the cron lines to your timezone/cadence.
+on:
+  schedule:
+    - cron: "0 7 * * 1"   # Monday
+    - cron: "0 7 * * 3"   # Wednesday
+    - cron: "0 7 * * 5"   # Friday
+    - cron: "0 18 * * 0"  # Sunday evening
+  workflow_dispatch:       # <- lets you run it manually with one tap from the GitHub app
+    inputs:
+      dry_run:
+        description: "Write script only (no video/posting)?"
+        type: boolean
+        default: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Install deps
+        run: pip install -r agent/requirements.txt
+
+      - name: Run the agent
+        env:
+          ANTHROPIC_API_KEY:  ${{ secrets.ANTHROPIC_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          PEXELS_API_KEY:     ${{ secrets.PEXELS_API_KEY }}
+          POSTIZ_API_KEY:     ${{ secrets.POSTIZ_API_KEY }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python agent/run.py --dry-run
+          else
+            python agent/run.py
+          fi
+
+      - name: Save generated content as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-${{ github.run_id }}
+          path: content/
+          if-no-files-found: ignore

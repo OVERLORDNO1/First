@@ -1,0 +1,16 @@
+{
+  "title": "The 2am Thought — you're not behind",
+  "template": "A",
+  "pillar": "The Reframe",
+  "hook": "It's 2am, and your brain just whispered: everyone's ahead of you.",
+  "script": "It's 2am, and your brain just whispered: everyone's ahead of you. You scroll, and it feels true. The promotions, the weddings, the people who figured it out. And you're still here, in the dark, feeling like you missed some starting gun everyone else heard. But here's what no one tells you about 2am thoughts. They're not facts. They're a tired brain running on fear, with the lights off and no evidence in the room. You are not behind. There is no line. There's just your life, moving at the speed a real life moves. Tomorrow, you don't have to win. You just have to begin. You're not behind. You're becoming.",
+  "beats": [
+    {"t": "0-3s",  "vo": "It's 2am, and your brain just whispered: everyone's ahead of you.", "broll": "rain on dark window at night city lights blurred moody", "onscreen_text": "It's 2am again."},
+    {"t": "3-13s", "vo": "You scroll, and it feels true. The people who figured it out. And you're still here, in the dark, feeling like you missed some starting gun.", "broll": "person lying awake in dark room phone glow lonely", "onscreen_text": "Everyone's ahead of you?"},
+    {"t": "13-21s","vo": "But here's what no one tells you about 2am thoughts. They're not facts. They're a tired brain running on fear.", "broll": "sunrise breaking over quiet foggy mountains hopeful golden light", "onscreen_text": "They're not facts."},
+    {"t": "21-29s","vo": "You are not behind. There is no line. There's just your life, moving at the speed a real life moves.", "broll": "lone figure walking calm empty road at dawn wide cinematic", "onscreen_text": "There is no line."},
+    {"t": "29-35s","vo": "Tomorrow, you just have to begin. You're not behind. You're becoming.", "broll": "person opening curtains warm morning light on face peaceful", "onscreen_text": "You're becoming."}
+  ],
+  "music_mood": "soft ambient piano, sparse and lonely at the start, a warm string swell arriving at 13s and lifting through to the end",
+  "voice_direction": "calm male, slow, warm, close-mic almost a whisper; gentle hopeful lift at 'you are not behind'; land the final line softly, unhurried"
+}

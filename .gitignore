@@ -1,0 +1,13 @@
+# NEVER commit real API keys
+agent/config.json
+
+# generated media can get big — keep the repo light (scripts/captions are kept as samples)
+content/**/*.mp4
+content/**/*.mp3
+content/**/broll_*.mp4
+content/**/clips.txt
+
+# python
+__pycache__/
+*.pyc
+.venv/

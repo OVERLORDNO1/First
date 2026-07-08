@@ -1,0 +1,33 @@
+{
+  "_comment": "Copy this to config.json and fill in. NEVER commit real keys — config.json is gitignored. In GitHub Actions these come from repo Secrets instead.",
+
+  "llm": {
+    "provider": "anthropic",
+    "model": "claude-opus-4-8",
+    "api_key_env": "ANTHROPIC_API_KEY"
+  },
+
+  "voiceover": {
+    "provider": "elevenlabs",
+    "api_key_env": "ELEVENLABS_API_KEY",
+    "voice_id": "put-a-warm-calm-voice-id-here"
+  },
+
+  "broll": {
+    "provider": "pexels",
+    "api_key_env": "PEXELS_API_KEY"
+  },
+
+  "scheduler": {
+    "provider": "postiz",
+    "base_url": "https://your-postiz-instance.com",
+    "api_key_env": "POSTIZ_API_KEY",
+    "platforms": ["tiktok", "instagram", "youtube", "facebook"]
+  },
+
+  "schedule": {
+    "videos_per_week": 4,
+    "post_times_local": ["08:00", "19:30"],
+    "timezone": "Europe/London"
+  }
+}
