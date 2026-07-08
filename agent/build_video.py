@@ -68,22 +68,65 @@ def fetch_broll(cfg, query: str, out: Path):
     return out
 
 
-def assemble(clips, voiceover: Path, out: Path):
-    """ffmpeg: concat clips, scale/crop to 1080x1920, lay the voiceover on top."""
+def _secs(t: str) -> tuple[float, float]:
+    """'13-21s' -> (13.0, 21.0). Tolerant of stray spaces / the trailing 's'."""
+    a, b = t.replace("s", "").split("-")
+    return float(a), float(b)
+
+
+def _esc(text: str) -> str:
+    """Escape a caption for ffmpeg drawtext."""
+    return text.replace("\\", "\\\\").replace(":", r"\:").replace("'", r"’").replace("%", r"\%")
+
+
+def caption_filters(beats) -> str:
+    """One drawtext per beat — big bold captions, timed to each beat, fading in."""
+    parts = []
+    for beat in beats:
+        start, end = _secs(beat["t"])
+        txt = _esc(beat.get("onscreen_text", "").upper())
+        if not txt:
+            continue
+        parts.append(
+            "drawtext=text='{t}'"
+            ":fontcolor=white:fontsize=76:font=sans:borderw=2:bordercolor=black@0.6"
+            ":box=1:boxcolor=black@0.28:boxborderw=26"
+            ":x=(w-text_w)/2:y=h*0.62"
+            ":enable='between(t,{s},{e})'".format(t=txt, s=start, e=end)
+        )
+    return ",".join(parts)
+
+
+def assemble(clips, voiceover: Path, beats, out: Path, music: Path | None = None):
+    """
+    ffmpeg: concat clips -> scale/crop to 1080x1920 -> burn timed captions
+    -> mix voiceover (loud) with optional background music (quiet).
+    """
     listfile = out.parent / "clips.txt"
     listfile.write_text("".join(f"file '{c}'\n" for c in clips), encoding="utf-8")
+
     vf = "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=30"
-    cmd = [
-        "ffmpeg", "-y",
-        "-f", "concat", "-safe", "0", "-i", str(listfile),
-        "-i", str(voiceover),
-        "-vf", vf,
-        "-map", "0:v:0", "-map", "1:a:0",
-        "-shortest", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac",
-        str(out),
-    ]
+    caps = caption_filters(beats)
+    if caps:
+        vf += "," + caps
+
+    cmd = ["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(listfile),
+           "-i", str(voiceover)]
+
+    if music and music.exists():
+        # duck the music under the voice, then mix
+        cmd += ["-stream_loop", "-1", "-i", str(music),
+                "-filter_complex",
+                f"[0:v]{vf}[v];"
+                "[2:a]volume=0.18[bg];"
+                "[1:a][bg]amix=inputs=2:duration=first:dropout_transition=2[a]",
+                "-map", "[v]", "-map", "[a]"]
+    else:
+        cmd += ["-vf", vf, "-map", "0:v:0", "-map", "1:a:0"]
+
+    cmd += ["-shortest", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", str(out)]
     subprocess.run(cmd, check=True)
-    print(f"✅ final video → {out}")
+    print(f"✅ final video (captions{' + music' if music and music.exists() else ''}) → {out}")
 
 
 def main(date_str: str):
@@ -102,8 +145,10 @@ def main(date_str: str):
     if not clips:
         sys.exit("No b-roll downloaded — check PEXELS_API_KEY and search terms.")
 
-    assemble(clips, d / "voice.mp3", d / "final.mp4")
-    # Captions overlay + music are added in a second ffmpeg pass — see docs/captions.md
+    # Optional: drop any royalty-free track at assets/music.mp3 and it'll be mixed in quietly.
+    music = ROOT / "assets" / "music.mp3"
+    assemble(clips, d / "voice.mp3", script["beats"], d / "final.mp4",
+             music if music.exists() else None)
 
 
 if __name__ == "__main__":
