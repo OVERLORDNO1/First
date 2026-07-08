@@ -2,11 +2,9 @@
 
 > Edit this file to make the page yours. Everything the agent creates flows from here.
 
-## Page name (working title)
-**Rise & Rewire**
-*(psychological + motivational — "rewire" nods to the mindset/neuroscience angle. Rename freely.)*
-
-Alt names to consider: *Quiet Fire · The Inner Rebuild · Mind Over Noise · Still Becoming*
+## Page name & handle
+**Mind Unstuck** — **@mindunstuck**
+*(benefit-driven: the page that gets you unstuck. Use the same handle on every platform.)*
 
 ## One-line promise
 > Small psychological shifts that quietly change everything.
