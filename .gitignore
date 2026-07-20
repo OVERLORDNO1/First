@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+.env
+jarvis.db
+*.db
+mcp_servers.json
+
+.pytest_cache/
+.coverage

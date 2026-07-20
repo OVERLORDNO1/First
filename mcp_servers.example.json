@@ -1,0 +1,7 @@
+[
+  {
+    "name": "composio",
+    "url": "https://your-composio-mcp-endpoint.example/mcp",
+    "authorization_token": "optional-bearer-token"
+  }
+]
