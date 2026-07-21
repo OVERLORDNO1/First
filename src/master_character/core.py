@@ -34,7 +34,7 @@ class MasterCharacter:
         self.settings = settings
         self.settings.ensure_directories()
         self.store = Store(settings.db_path)
-        self.provider = create_provider(settings)
+        self.provider = create_provider(settings, self.store)
         self.context = ContextBuilder(settings, self.store)
         self.architect = MissionArchitect(self.provider, self.context, self.store)
         self.factory = AgentFactory(self.provider, self.context, self.store)

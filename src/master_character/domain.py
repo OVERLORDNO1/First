@@ -318,7 +318,32 @@ class ModelUsage(BaseModel):
     model: str
     input_tokens: int = 0
     output_tokens: int = 0
+    cache_creation_input_tokens: int = 0
+    cache_read_input_tokens: int = 0
+    calls: int = 0
+    retries: int = 0
+    stop_reason: str | None = None
     estimated_cost_usd: float = 0.0
+    correlation_id: str | None = None
+    created_at: datetime = Field(default_factory=utc_now)
+
+
+class ProviderFailureRecord(BaseModel):
+    id: str = Field(default_factory=lambda: new_id("pfail"))
+    correlation_id: str | None = None
+    provider: str
+    model: str
+    http_status: int | None = None
+    request_turn: int | None = None
+    stop_reason: str | None = None
+    input_tokens: int = 0
+    output_tokens: int = 0
+    cache_creation_input_tokens: int = 0
+    cache_read_input_tokens: int = 0
+    estimated_cost_usd: float = 0.0
+    retry_decision: str | None = None
+    exception_category: str
+    sanitized_message: str
     created_at: datetime = Field(default_factory=utc_now)
 
 

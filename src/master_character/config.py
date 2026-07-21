@@ -44,6 +44,15 @@ class Settings(BaseSettings):
     max_task_cost_usd: float = Field(default=0.75, alias="MASTER_MAX_TASK_COST_USD")
     max_daily_cost_usd: float = Field(default=5.0, alias="MASTER_MAX_DAILY_COST_USD")
     prompt_cache: bool = Field(default=True, alias="MASTER_PROMPT_CACHE")
+    model_pricing_json: str | None = Field(default=None, alias="MASTER_MODEL_PRICING_JSON")
+    provider_max_retries: int = Field(default=3, alias="MASTER_PROVIDER_MAX_RETRIES")
+    provider_backoff_base_seconds: float = Field(
+        default=0.5, alias="MASTER_PROVIDER_BACKOFF_BASE_SECONDS"
+    )
+    provider_backoff_max_seconds: float = Field(
+        default=8.0, alias="MASTER_PROVIDER_BACKOFF_MAX_SECONDS"
+    )
+    provider_max_tokens: int = Field(default=4096, alias="MASTER_PROVIDER_MAX_TOKENS")
     auto_promote_prompt_mutations: bool = Field(
         default=False, alias="MASTER_AUTO_PROMOTE_PROMPT_MUTATIONS"
     )

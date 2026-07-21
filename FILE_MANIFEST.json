@@ -1,22 +1,287 @@
-from master_character.core import MasterCharacter
-from master_character.domain import MissionStatus, TaskStatus
-
-
-async def test_command_creates_agents_and_completes_mission(settings):
-    character = MasterCharacter(settings)
-    directive, mission, tasks = await character.command(
-        "Build a working internal research engine",
-        success_criteria=["A tested implementation exists"],
-        constraints=["No spending"],
-    )
-
-    assert directive.statement.startswith("Build")
-    assert mission.status is MissionStatus.RUNNING
-    assert len(tasks) == 3
-    assert character.store.get_active_agent("mission_builder") is not None
-
-    processed = await character.run_until_idle(max_steps=20)
-    assert processed
-    stored = character.store.list_tasks(mission_id=mission.id)
-    assert all(task.status is TaskStatus.COMPLETED for task in stored)
-    assert character.store.get_mission(mission.id).status is MissionStatus.COMPLETED
+[
+  {
+    "path": ".claude/settings.json",
+    "bytes": 701,
+    "sha256": "e61a3b194ab40771794d8cca05ce45e79af7c87fbd2689ad0dff0d30173baac5"
+  },
+  {
+    "path": ".env.example",
+    "bytes": 857,
+    "sha256": "50521031c638663ef00e31f95940f75990d0c23b4aaf0c2f98602e70351fb067"
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "bytes": 484,
+    "sha256": "a19fe2ee4afc0c28c42e837b6fcc9aff65f11350deff23812634ce22ad3760bc"
+  },
+  {
+    "path": ".gitignore",
+    "bytes": 122,
+    "sha256": "ee706e643f1acd8e07081e682e84cdd64e762f22227cabf3a0690926db106d69"
+  },
+  {
+    "path": "BUILD_REPORT.md",
+    "bytes": 2242,
+    "sha256": "8eea765288980df9a853e2e0f86cd2be1fa3d8b0b430ad5efee235d8427e2f84"
+  },
+  {
+    "path": "CLAUDE.md",
+    "bytes": 5087,
+    "sha256": "271eb75bd7e47964ca81e84e59fc2bd7a9566f73fe0c192f319ce76dc3afbfd2"
+  },
+  {
+    "path": "CLAUDE_CODE_WEB_START.md",
+    "bytes": 1529,
+    "sha256": "fe9a60e048aefc9eab44994bf39d8eff6e6ba9fcc6ea7d15210b3d41cdb53516"
+  },
+  {
+    "path": "INITIAL_STAGE_DATA.json",
+    "bytes": 1521,
+    "sha256": "f23f8ccf49aac391789c35e9ea8a45c190217e9f8925dd20d305a225d2b86ba7"
+  },
+  {
+    "path": "README.md",
+    "bytes": 3773,
+    "sha256": "b349f2a0393ad7ed19b45327111f9d2420b8e21d1752fd5189c55af636b27b48"
+  },
+  {
+    "path": "SETUP_UNIX.md",
+    "bytes": 473,
+    "sha256": "2c704892be0106676fb123cfc5788bb6d998ff85cc88347b7be6b9eb22941757"
+  },
+  {
+    "path": "SETUP_WINDOWS.md",
+    "bytes": 982,
+    "sha256": "e6496cb0ca1f85b0042a39cdef4a9074aaeae6412fcb56604a470f9ecf3e299f"
+  },
+  {
+    "path": "charter/MASTER_CHARACTER_CHARTER.md",
+    "bytes": 2502,
+    "sha256": "98d7184529acdbaddb5e08825a70009422c59ee59cb3b943fef3e9b01cb395fc"
+  },
+  {
+    "path": "config/capabilities.yaml",
+    "bytes": 1170,
+    "sha256": "e0b2caf244919b94b39895e708c15245a4ef39003241cfd40dbe801364939d23"
+  },
+  {
+    "path": "config/immutable_rules.yaml",
+    "bytes": 821,
+    "sha256": "6e4bbaa5968fc1c5b7220b3a2ffb14f649a91c870e544c994701d7306c0701d5"
+  },
+  {
+    "path": "docs/ARCHITECTURE.md",
+    "bytes": 1710,
+    "sha256": "20656eb718bdedacc20bc47915ee177ad649c9a6679241d6e40a1a49a9258199"
+  },
+  {
+    "path": "docs/CLAUDE_CODE_START_HERE.md",
+    "bytes": 766,
+    "sha256": "2f2fe131dbc809ec627ba404199291e78544cb5b09c70e13e24b41e4b1edc0b0"
+  },
+  {
+    "path": "docs/CURRENT_MISSION.md",
+    "bytes": 5727,
+    "sha256": "76dbf2f6321a9e318a1717c02ff419729c9ac6b3842e905d8d1c324464725bda"
+  },
+  {
+    "path": "docs/DEVELOPMENT_PROTOCOL.md",
+    "bytes": 2304,
+    "sha256": "287c4532f6954a44dea1aaba662442427ca6cfe8c55bb83c756d80cb131f9277"
+  },
+  {
+    "path": "docs/FIRST_LIVE_MISSION.md",
+    "bytes": 1638,
+    "sha256": "f692d47c3b9e2ce23b888c2ede9de0b7cb4a2f036526ea1ad6d9acd867835834"
+  },
+  {
+    "path": "docs/HANDOFF_TEMPLATE.md",
+    "bytes": 1163,
+    "sha256": "a6fd4cdd29ef90f95cfa198f39d4e88eaa5bd94b7a36761d3675383495498d26"
+  },
+  {
+    "path": "docs/INITIAL_STAGE.md",
+    "bytes": 1766,
+    "sha256": "26ec6491cbb028175d742de36a0d3e58d522916ba560c488cb1cad7ce1236507"
+  },
+  {
+    "path": "docs/PROJECT_CONTEXT.md",
+    "bytes": 2128,
+    "sha256": "0193e34a7ed54555857021ef94c6e778a0a8ceef0f49b0df874dc1da5f87fa8a"
+  },
+  {
+    "path": "docs/REPOSITORY_SELECTION.md",
+    "bytes": 1332,
+    "sha256": "309adfe38ba828fb0dfed3be40153f3891f74037d84770daebdf21c0aa65dc23"
+  },
+  {
+    "path": "docs/VISION_AND_BOUNDARIES.md",
+    "bytes": 3388,
+    "sha256": "db8583c398ae0cd754bea28374a67c25fe4cb752b0ce736e08471cf0820b896b"
+  },
+  {
+    "path": "pyproject.toml",
+    "bytes": 993,
+    "sha256": "6e471f83485641c161bdaa660948ce2fd236ff6152b09fa3bb1c39185d62af6c"
+  },
+  {
+    "path": "scripts/start_claude_code.ps1",
+    "bytes": 433,
+    "sha256": "593927f064b23a4582a223821028d4f3df44720b3b68a30f13c6b37f6403e39d"
+  },
+  {
+    "path": "scripts/start_claude_code.sh",
+    "bytes": 353,
+    "sha256": "d35c9b38c9fc8da30f17dc02693fd84f971cf1eaf6e7dbb950f4565e804dc564"
+  },
+  {
+    "path": "scripts/verify_repository.py",
+    "bytes": 653,
+    "sha256": "be338cec82d19f03cc8a7daf40647e0c4414c5542110fdd6bf3e629b4ca1469e"
+  },
+  {
+    "path": "src/master_character/__init__.py",
+    "bytes": 22,
+    "sha256": "ffb3a541d6d590ae2369dd022dda48d20ad3fb31006feaa01661f9985cc35e20"
+  },
+  {
+    "path": "src/master_character/agents.py",
+    "bytes": 1992,
+    "sha256": "5bf2342cc6389d635c600c860dd611bdffba88318a71d55c0d0dccf940a9f0da"
+  },
+  {
+    "path": "src/master_character/api.py",
+    "bytes": 2838,
+    "sha256": "c1d57bc90a2f5d16939ca1b718d5210cc72f7a214299467072c49aa2c70f60c8"
+  },
+  {
+    "path": "src/master_character/birth.py",
+    "bytes": 5543,
+    "sha256": "00c77cf1bc11be25c36acbe7489e2d07d638e93277b89decf55d98198b0b0fda"
+  },
+  {
+    "path": "src/master_character/cli.py",
+    "bytes": 3736,
+    "sha256": "3a74998831e403ed01c75c5cb3e5f8c1af75dd15a06b262a0ece30504fd6270c"
+  },
+  {
+    "path": "src/master_character/config.py",
+    "bytes": 2850,
+    "sha256": "74fa0d7cf5f2375c651e9e4f8be02260c27e8fdc53d4ab625e0dba96ce1f135e"
+  },
+  {
+    "path": "src/master_character/context.py",
+    "bytes": 1551,
+    "sha256": "267ba837c5b5fd05e05d0ae349fba0458c3642d670a05b4af4c03b118d4ad322"
+  },
+  {
+    "path": "src/master_character/core.py",
+    "bytes": 13374,
+    "sha256": "96ae765688ba49631a7131c1d7f5d75d2b43ccaf7c9e0d1151f3d6dec0f339bd"
+  },
+  {
+    "path": "src/master_character/domain.py",
+    "bytes": 9538,
+    "sha256": "3dc71e8aebd3db10195ef1bb57b084751cebbbc50311323a32721434665a2142"
+  },
+  {
+    "path": "src/master_character/drive.py",
+    "bytes": 4057,
+    "sha256": "319ab0477c9fee7184d8b3914df88cf540b23bec8b067bed8f70a78a04ce562f"
+  },
+  {
+    "path": "src/master_character/evolution.py",
+    "bytes": 7355,
+    "sha256": "18b2a5eb5cca029cfdf3d77dad90cdfc0a8b66cd9745e91be97cac7321e5cc4e"
+  },
+  {
+    "path": "src/master_character/execution.py",
+    "bytes": 1926,
+    "sha256": "af1b37c9466d5b6ba8c27fef133614ad69727625dddc126405502b7ad4d2e47d"
+  },
+  {
+    "path": "src/master_character/planning.py",
+    "bytes": 1249,
+    "sha256": "5d76e6984829cb2df3ae94fddf7458fb1fe7a2aa41d384af46e8b920498d0c1d"
+  },
+  {
+    "path": "src/master_character/providers/anthropic.py",
+    "bytes": 5283,
+    "sha256": "6dd6eb6ba0c86255380a84acb3c62e7028115613fdae95395d26d3e00d577176"
+  },
+  {
+    "path": "src/master_character/providers/base.py",
+    "bytes": 762,
+    "sha256": "b5361348789117b5a92e3e1a00894330c631e358d81ced9cc1f1aa5d65afd25a"
+  },
+  {
+    "path": "src/master_character/providers/factory.py",
+    "bytes": 586,
+    "sha256": "2edb34409af25dff2d09f2998350cb43ebb2d8f19b18808043f8c59d2cc3ba00"
+  },
+  {
+    "path": "src/master_character/providers/mock.py",
+    "bytes": 9870,
+    "sha256": "a83519e0a8cfa5bc374a1812b8d3d8317900d536432f5b758bcd18acbe186d96"
+  },
+  {
+    "path": "src/master_character/store.py",
+    "bytes": 19524,
+    "sha256": "ac95a06ba9446deb8c4637bd3e534c5803007e7f13419294fd877769ca6ef001"
+  },
+  {
+    "path": "src/master_character/tools.py",
+    "bytes": 5467,
+    "sha256": "e5db0dcf22819d5f0c306216c6d419f437125a974ea5221324990dcc785fc90c"
+  },
+  {
+    "path": "src/master_character/util.py",
+    "bytes": 237,
+    "sha256": "e31e70e283b01646aaf02776edcb38630a28f4121646ae4f14f78f0b9579ff82"
+  },
+  {
+    "path": "tests/conftest.py",
+    "bytes": 547,
+    "sha256": "d65a6bd070ae108049739a07ef885f2c5691e221e6369fcc60c25c144d947e80"
+  },
+  {
+    "path": "tests/test_api.py",
+    "bytes": 482,
+    "sha256": "00d34a5fd36e96aa89b0cd602152bdb8d156c0c4cf9f0bcca3e578917f14d476"
+  },
+  {
+    "path": "tests/test_append_only.py",
+    "bytes": 586,
+    "sha256": "93a08efc3383dfb2246d02869a624cbe6bfad93efb4dd5303fbc64f8ef1ac5a5"
+  },
+  {
+    "path": "tests/test_birth.py",
+    "bytes": 514,
+    "sha256": "9d662db2ceddb3cb6486ba06a5f94d5e9efc095d076f550d99839e2f79ec829b"
+  },
+  {
+    "path": "tests/test_command_lifecycle.py",
+    "bytes": 947,
+    "sha256": "498f6c70c97cba0c877a4ae6c5856414015de3cb88d1c80d796826153472b68b"
+  },
+  {
+    "path": "tests/test_evolution.py",
+    "bytes": 496,
+    "sha256": "0af6a644bd36629efa161f33667b4e337465fc8a45f86a8c94919a8c565fbc94"
+  },
+  {
+    "path": "tests/test_leasing.py",
+    "bytes": 427,
+    "sha256": "2455458604e66a9fa63f090f05ca6dbd5aa5d311b8870d37f7fb232873c2f68e"
+  },
+  {
+    "path": "tests/test_tools.py",
+    "bytes": 505,
+    "sha256": "ecc6affe3a8dcd7bcdeb06965c3914b884e6a7dbbffe7a087289c97c10933b4f"
+  },
+  {
+    "path": "workspace/.gitkeep",
+    "bytes": 1,
+    "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  }
+]

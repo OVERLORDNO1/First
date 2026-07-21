@@ -1,13 +1,50 @@
-from master_character.core import MasterCharacter
-from master_character.domain import ApprovalStatus, MutationStatus
-
-
-async def test_growth_task_stages_mutation_for_approval(settings):
-    character = MasterCharacter(settings)
-    await character.birth()
-    await character.run_until_idle(max_steps=20)
-
-    approvals = character.store.list_approvals()
-    assert len(approvals) == 1
-    assert approvals[0].action == "promote_mutation"
-    assert approvals[0].status is ApprovalStatus.PENDING
+{
+  "project": {
+    "name": "Master Character",
+    "version": "2.1.0",
+    "owner": "Ryan",
+    "identity": "Persistent founder-aligned artificial worker and creator system",
+    "architecture": "Provider-independent deterministic kernel plus specialist cognitive agents"
+  },
+  "repository": {
+    "intended": "OVERLORDNO1/First",
+    "preferred_branch": "claude/session-zero-provider-hardening",
+    "sentinel_files": [
+      "pyproject.toml",
+      "CLAUDE.md",
+      "README.md",
+      "charter/MASTER_CHARACTER_CHARTER.md",
+      "config/immutable_rules.yaml",
+      "src/master_character/core.py",
+      "src/master_character/providers/anthropic.py",
+      "tests/test_birth.py",
+      "docs/CURRENT_MISSION.md"
+    ]
+  },
+  "baseline": {
+    "tests_expected": 7,
+    "command": "python -m pytest -q",
+    "live_api_calls_completed": 0
+  },
+  "active_stage": {
+    "id": "session_zero",
+    "name": "Live Anthropic Provider Hardening",
+    "source_of_truth": "docs/CURRENT_MISSION.md",
+    "live_smoke_default_budget_usd": 0.1
+  },
+  "hard_boundaries": [
+    "No committed secrets",
+    "No Charter edits",
+    "No immutable-rule edits",
+    "No Siteupfit-specific architecture",
+    "No uncontrolled shell access",
+    "No external contact",
+    "No public publishing",
+    "No money movement",
+    "No live API test unless key already exists locally"
+  ],
+  "next_stage": {
+    "name": "Minimal live provider proof",
+    "success": "One structured live call with non-zero recorded cost inside hard budget"
+  }
+}

@@ -17,6 +17,7 @@ from master_character.domain import (
     MissionStatus,
     ModelUsage,
     MutationProposal,
+    ProviderFailureRecord,
     Task,
     TaskStatus,
 )
@@ -121,7 +122,32 @@ class Store:
                     model TEXT NOT NULL,
                     input_tokens INTEGER NOT NULL,
                     output_tokens INTEGER NOT NULL,
+                    cache_creation_input_tokens INTEGER NOT NULL DEFAULT 0,
+                    cache_read_input_tokens INTEGER NOT NULL DEFAULT 0,
+                    calls INTEGER NOT NULL DEFAULT 0,
+                    retries INTEGER NOT NULL DEFAULT 0,
+                    stop_reason TEXT,
+                    correlation_id TEXT,
                     estimated_cost_usd REAL NOT NULL,
+                    created_at TEXT NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS provider_failures (
+                    id TEXT PRIMARY KEY,
+                    correlation_id TEXT,
+                    provider TEXT NOT NULL,
+                    model TEXT NOT NULL,
+                    http_status INTEGER,
+                    request_turn INTEGER,
+                    stop_reason TEXT,
+                    input_tokens INTEGER NOT NULL DEFAULT 0,
+                    output_tokens INTEGER NOT NULL DEFAULT 0,
+                    cache_creation_input_tokens INTEGER NOT NULL DEFAULT 0,
+                    cache_read_input_tokens INTEGER NOT NULL DEFAULT 0,
+                    estimated_cost_usd REAL NOT NULL DEFAULT 0,
+                    retry_decision TEXT,
+                    exception_category TEXT NOT NULL,
+                    sanitized_message TEXT NOT NULL,
                     created_at TEXT NOT NULL
                 );
 
@@ -149,8 +175,25 @@ class Store:
                 CREATE INDEX IF NOT EXISTS idx_tasks_mission ON tasks(mission_id);
                 CREATE INDEX IF NOT EXISTS idx_events_correlation ON events(correlation_id, id);
                 CREATE INDEX IF NOT EXISTS idx_agents_key ON agents(agent_key, version DESC);
+                CREATE INDEX IF NOT EXISTS idx_usage_correlation ON usage(correlation_id);
                 """
             )
+            self._migrate_usage_columns(db)
+
+    @staticmethod
+    def _migrate_usage_columns(db: sqlite3.Connection) -> None:
+        existing = {row["name"] for row in db.execute("PRAGMA table_info(usage)").fetchall()}
+        additions = {
+            "cache_creation_input_tokens": "INTEGER NOT NULL DEFAULT 0",
+            "cache_read_input_tokens": "INTEGER NOT NULL DEFAULT 0",
+            "calls": "INTEGER NOT NULL DEFAULT 0",
+            "retries": "INTEGER NOT NULL DEFAULT 0",
+            "stop_reason": "TEXT",
+            "correlation_id": "TEXT",
+        }
+        for column, definition in additions.items():
+            if column not in existing:
+                db.execute(f"ALTER TABLE usage ADD COLUMN {column} {definition}")
 
     def append_event(self, event_type: str, payload: dict, correlation_id: str | None = None) -> None:
         with self.connection() as db:
@@ -443,17 +486,70 @@ class Store:
     def record_usage(self, usage: ModelUsage) -> None:
         with self.connection() as db:
             db.execute(
-                "INSERT INTO usage(provider,model,input_tokens,output_tokens,estimated_cost_usd,created_at) "
-                "VALUES(?,?,?,?,?,?)",
+                "INSERT INTO usage(provider,model,input_tokens,output_tokens,"
+                "cache_creation_input_tokens,cache_read_input_tokens,calls,retries,"
+                "stop_reason,correlation_id,estimated_cost_usd,created_at) "
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
                 (
                     usage.provider,
                     usage.model,
                     usage.input_tokens,
                     usage.output_tokens,
+                    usage.cache_creation_input_tokens,
+                    usage.cache_read_input_tokens,
+                    usage.calls,
+                    usage.retries,
+                    usage.stop_reason,
+                    usage.correlation_id,
                     usage.estimated_cost_usd,
                     usage.created_at.isoformat(),
                 ),
             )
+
+    def record_provider_failure(self, record: ProviderFailureRecord) -> None:
+        with self.connection() as db:
+            db.execute(
+                "INSERT INTO provider_failures(id,correlation_id,provider,model,http_status,"
+                "request_turn,stop_reason,input_tokens,output_tokens,"
+                "cache_creation_input_tokens,cache_read_input_tokens,estimated_cost_usd,"
+                "retry_decision,exception_category,sanitized_message,created_at) "
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    record.id,
+                    record.correlation_id,
+                    record.provider,
+                    record.model,
+                    record.http_status,
+                    record.request_turn,
+                    record.stop_reason,
+                    record.input_tokens,
+                    record.output_tokens,
+                    record.cache_creation_input_tokens,
+                    record.cache_read_input_tokens,
+                    record.estimated_cost_usd,
+                    record.retry_decision,
+                    record.exception_category,
+                    record.sanitized_message,
+                    record.created_at.isoformat(),
+                ),
+            )
+
+    def list_provider_failures(self, limit: int = 50) -> list[ProviderFailureRecord]:
+        with self.connection() as db:
+            rows = db.execute(
+                "SELECT * FROM provider_failures ORDER BY created_at DESC, id DESC LIMIT ?",
+                (limit,),
+            ).fetchall()
+        return [ProviderFailureRecord.model_validate(dict(row)) for row in rows]
+
+    def task_cost(self, correlation_id: str) -> float:
+        with self.connection() as db:
+            row = db.execute(
+                "SELECT COALESCE(SUM(estimated_cost_usd),0) AS total FROM usage "
+                "WHERE correlation_id=?",
+                (correlation_id,),
+            ).fetchone()
+        return float(row["total"])
 
     def daily_cost(self) -> float:
         today = utc_now().date().isoformat()
