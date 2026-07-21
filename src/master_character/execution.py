@@ -45,7 +45,10 @@ class TaskExecutor:
             tools=registry.definitions(),
             tool_executor=registry.execute,
             max_turns=min(agent.max_turns, self.settings.max_model_turns),
-            cost_budget_usd=min(task.cost_budget_usd, agent.cost_budget_usd),
+            cost_budget_usd=min(
+                task.cost_budget_usd, agent.cost_budget_usd, self.settings.max_task_cost_usd
+            ),
+            correlation_id=task.correlation_id,
         )
         self.store.record_usage(usage)
         return result

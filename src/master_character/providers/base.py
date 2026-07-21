@@ -24,5 +24,6 @@ class CognitionProvider(ABC):
         tool_executor: ToolExecutor | None = None,
         max_turns: int = 6,
         cost_budget_usd: float = 0.25,
+        correlation_id: str | None = None,
     ) -> tuple[T, ModelUsage]:
         raise NotImplementedError

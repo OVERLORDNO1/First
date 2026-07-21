@@ -108,6 +108,85 @@ def events(limit: int = typer.Option(50, "--limit", "-n")) -> None:
     console.print_json(json.dumps(character.store.list_events(limit), indent=2))
 
 
+@app.command("provider-smoke")
+def provider_smoke(
+    budget_usd: float = typer.Option(0.10, "--budget-usd", min=0.0),
+) -> None:
+    """Run one minimal live structured call with a hard cost ceiling."""
+    from pydantic import BaseModel
+
+    from master_character.domain import ModelTier
+    from master_character.errors import ProviderError
+    from master_character.providers.factory import create_provider
+    from master_character.store import Store
+    from master_character.util import new_id
+
+    settings = Settings()
+    if settings.provider.lower().strip() != "anthropic":
+        console.print("[red]provider-smoke requires MASTER_PROVIDER=anthropic.[/red]")
+        raise typer.Exit(code=2)
+    if not settings.anthropic_api_key:
+        console.print("[red]ANTHROPIC_API_KEY is not set in the local environment.[/red]")
+        raise typer.Exit(code=2)
+
+    settings.ensure_directories()
+    store = Store(settings.db_path)
+    store.initialize()
+    provider = create_provider(settings, store)
+    correlation_id = new_id("smoke")
+
+    class SmokeResult(BaseModel):
+        message: str
+
+    async def smoke():
+        return await provider.structured(
+            system="You are a smoke test. Do not use any tool except emit_structured_result.",
+            prompt=(
+                "This is a provider smoke test. Call emit_structured_result exactly once "
+                'with {"message": "smoke-ok"}.'
+            ),
+            response_model=SmokeResult,
+            tier=ModelTier.WORKER,
+            max_turns=2,
+            cost_budget_usd=budget_usd,
+            correlation_id=correlation_id,
+        )
+
+    try:
+        result, usage = run(smoke())
+    except ProviderError as exc:
+        console.print(f"[red]Smoke test failed ({exc.category}): {exc}[/red]")
+        raise typer.Exit(code=1) from exc
+
+    store.record_usage(usage)
+    table = Table(title="Provider smoke result")
+    table.add_column("Field")
+    table.add_column("Value")
+    table.add_row("provider", usage.provider)
+    table.add_row("model", usage.model)
+    table.add_row("calls", str(usage.calls))
+    table.add_row("retries", str(usage.retries))
+    table.add_row("stop_reason", str(usage.stop_reason))
+    table.add_row("input_tokens", str(usage.input_tokens))
+    table.add_row("output_tokens", str(usage.output_tokens))
+    table.add_row("cache_creation_input_tokens", str(usage.cache_creation_input_tokens))
+    table.add_row("cache_read_input_tokens", str(usage.cache_read_input_tokens))
+    table.add_row("estimated_cost_usd", f"{usage.estimated_cost_usd:.6f}")
+    table.add_row("budget_usd", f"{budget_usd:.6f}")
+    table.add_row("result", result.message)
+    console.print(table)
+
+    if usage.estimated_cost_usd <= 0:
+        console.print(
+            "[red]Successful live call recorded zero cost; ledger is untrustworthy.[/red]"
+        )
+        raise typer.Exit(code=1)
+    if usage.estimated_cost_usd > budget_usd:
+        console.print("[red]Recorded cost breached the configured budget.[/red]")
+        raise typer.Exit(code=1)
+    console.print("[green]Smoke test passed with a non-zero, in-budget cost ledger.[/green]")
+
+
 @app.command()
 def daemon() -> None:
     character = MasterCharacter(Settings())
