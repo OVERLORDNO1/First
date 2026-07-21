@@ -1,0 +1,26 @@
+# mock = zero-cost deterministic local run
+# anthropic = live Anthropic Messages API
+MASTER_PROVIDER=mock
+ANTHROPIC_API_KEY=
+ANTHROPIC_BASE_URL=https://api.anthropic.com
+ANTHROPIC_VERSION=2023-06-01
+
+# Provider model IDs are replaceable configuration, never Character identity.
+# Verify the exact model IDs available in your Anthropic Console.
+MASTER_REASONING_MODEL=claude-sonnet-4-20250514
+MASTER_WORKER_MODEL=claude-3-5-haiku-20241022
+MASTER_CRITIC_MODEL=claude-sonnet-4-20250514
+
+MASTER_DB_PATH=./data/master_character.db
+MASTER_WORKSPACE=./workspace
+MASTER_HOST=127.0.0.1
+MASTER_PORT=8765
+MASTER_TICK_SECONDS=10
+MASTER_RESEARCH_INTERVAL_MINUTES=60
+MASTER_MAX_TASKS_PER_STEP=3
+MASTER_MAX_MODEL_TURNS=8
+MASTER_MAX_TASK_COST_USD=0.75
+MASTER_MAX_DAILY_COST_USD=5.00
+MASTER_PROMPT_CACHE=true
+MASTER_AUTO_PROMOTE_PROMPT_MUTATIONS=false
+MASTER_LOG_LEVEL=INFO
