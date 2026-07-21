@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Read",
+      "Edit",
+      "Bash(python -m pytest:*)",
+      "Bash(pytest:*)",
+      "Bash(python -m compileall:*)",
+      "Bash(ruff check:*)",
+      "Bash(master-character:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(**/.env)",
+      "Edit(.env)",
+      "Edit(charter/MASTER_CHARACTER_CHARTER.md)",
+      "Edit(config/immutable_rules.yaml)",
+      "Bash(git push:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean:*)",
+      "Bash(rm -rf:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(*--dangerously-skip-permissions*)"
+    ]
+  }
+}
